@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Early Work — Mollie E. Muñoz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:    #f7f5f1;
+    --ink:      oklch(0.22 0.005 60);
+    --dark-mid: oklch(0.32 0.005 60);
+    --mid:      oklch(0.42 0.005 60);
+    --light:    oklch(0.62 0.006 70);
+    --whisper:  oklch(0.78 0.006 75);
+    --faint:    #ece9e3;
+    --smudge:   #d8d4cc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 999;
+    opacity: 0.45; mix-blend-mode: multiply;
+  }
+
+  #charcoal-cursor {
+    position: fixed; inset: 0;
+    z-index: 1000; pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 40;
+    background: rgba(247,245,241,0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--smudge);
+  }
+
+  nav ul {
+    list-style: none; display: flex;
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 clamp(2rem, 5vw, 5rem);
+  }
+
+  nav ul li a {
+    display: block;
+    padding: 1.2rem 2.2rem 1.2rem 0;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.88rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--mid);
+    text-decoration: none; transition: color 0.25s;
+  }
+
+  nav ul li a:hover { color: var(--ink); text-decoration: none; }
+  a { cursor: none; }
+
+  nav ul li a:hover .nav-underline {
+    text-decoration: underline;
+    text-decoration-color: var(--mid);
+    text-underline-offset: 4px;
+  }
+
+  /* ── MAIN ── */
+  main { 
+    width: 100%; 
+    background: var(--paper); 
+    position: relative; 
+    z-index: 1; }
+
+  .content-wrap {
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 0 clamp(2rem, 5vw, 5rem);
+  }
+
+  /* ── HEADER ── */
+  .project-header {
+    padding: 5rem 0 1.5rem;
+  }
+
+  .project-eyebrow {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.88rem; 
+    letter-spacing: 0.38em;
+    text-transform: uppercase; 
+    color: var(--ink);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: m-fade 1.2s ease-out 0.3s forwards;
+  }
+
+  .project-header h1 {
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
+    font-weight: 400; font-style: italic;
+    letter-spacing: 0.02em; line-height: 1.1;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: m-rise 1.2s ease-out 0.3s forwards;
+  }
+
+  .project-meta {
+    display: flex; gap: 2rem; flex-wrap: wrap;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: m-fade 1.2s ease-out 0.6s forwards;
+  }
+
+  .project-meta span {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.82rem; 
+    letter-spacing: 0.28em;
+    text-transform: uppercase; 
+    color: var(--mid);
+  }
+
+  .project-description {
+    font-size: 1.25rem; 
+    line-height: 1.85;
+    color: var(--ink); 
+    font-style: italic; 
+    font-weight: 400;
+    opacity: 0;
+    animation: m-fade 1.4s ease-out 0.9s forwards;
+  }
+
+  @keyframes m-rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes m-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── INK SWEEP WRAPPER — constrains and centers sweep width ── */
+  .sweep-wrap {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Ink sweep divider */
+  .ink-sweep {
+    margin: 1.5rem 0 2rem;
+  }
+
+  /* ── SECTION LABEL ── */
+  .gallery-section {
+    padding: 3rem 0 0;
+  }
+
+  .gallery-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.78rem; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--light);
+    margin-bottom: 2rem;
+    display: block;
+    opacity: 0;
+    animation: m-fade 0.8s ease-out 1.4s forwards;
+  }
+
+  /* ── MASONRY-STYLE GRID ── */
+  /* Two columns, items reveal naturally */
+  .gallery-grid {
+    columns: 2;
+    column-gap: 1.5rem;
+    margin-bottom: 4rem;
+    opacity: 0;
+    animation: m-fade 0.6s ease-out 1.2s forwards;
+  }
+
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    display: block;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .gallery-item.visible {
+    opacity: 1; transform: none;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    display: block;
+  }
+
+  .gallery-item .caption {
+    padding: 0.6rem 0 0;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.68rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--light);
+    line-height: 1.6;
+  }
+
+  /* ── FEATURED — large single pieces ── */
+  .gallery-featured {
+    margin-bottom: 4rem;
+  }
+
+  .gallery-featured .gallery-item {
+    break-inside: unset;
+    margin-bottom: 3rem;
+  }
+
+  .gallery-featured img {
+    width: 100%; display: block;
+  }
+
+  /* ── SKETCHES — smaller, 3 across ── */
+  .gallery-sketches {
+    columns: 3;
+    column-gap: 1.2rem;
+    margin-bottom: 4rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    width: 100%;
+    background: var(--paper);
+    padding: 3rem clamp(2rem, 5vw, 5rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+  }
+
+  .footer-stamp {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    opacity: 0.75;
+  }
+
+  footer .contact a {
+    display: block;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.82rem; letter-spacing: 0.12em;
+    color: var(--mid); text-decoration: none;
+    line-height: 2.2; transition: color 0.2s;
+  }
+
+  footer .contact a:hover { color: var(--ink); }
+
+  footer .built {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.6rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--whisper);
+    text-align: right; line-height: 2;
+  }
+
+  @media (max-width: 720px) {
+    .gallery-grid, .gallery-sketches { columns: 1; }
+    body { cursor: auto; }
+    #charcoal-cursor { display: none; }
+  }
+
+  @media (max-width: 500px) {
+    .gallery-sketches { columns: 2; }
+  }
+
+
+  /* ── LIGHTBOX ── */
+  .gallery-lightbox { cursor: crosshair; }
+ 
+  .lightbox-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,24,20,0.88);
+    z-index: 3000;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+    cursor: none;
+  }
+ 
+  .lightbox-overlay.active {
+    opacity: 1; pointer-events: all;
+  }
+ 
+  .lightbox-overlay img {
+    max-width: 90vw; max-height: 90vh;
+    object-fit: contain;
+    box-shadow: 0 12px 60px rgba(0,0,0,0.5);
+    cursor: none;
+  }
+ 
+  .lightbox-close {
+    position: absolute;
+    top: 2rem; right: 2.5rem;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.7rem; letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(247,245,241,0.6);
+    cursor: none;
+    transition: color 0.2s;
+  }
+ 
+  .lightbox-close:hover { color: rgba(247,245,241,1); }
+
+</style>
+</head>
+<body>
+
+<canvas id="charcoal-cursor" aria-hidden="true"></canvas>
+
+<nav>
+  <ul>
+    <li><a href="index.html#early-work">← <span class="nav-underline">Portfolio</span></a></li>
+  </ul>
+</nav>
+
+<main>
+<div class="content-wrap">
+
+  <div class="project-header">
+    <p class="project-eyebrow">Visual &amp; Spatial Design</p>
+    <h1>Early Work</h1>
+    <div class="project-meta">
+      <span>Charcoal · Film Photography · Visual Merchandising · 2005 — 2011</span>
+    </div>
+    <p class="project-description">
+      Early art and user experience projects. Envisioning, creating, and finalizing concepts.
+    </p>
+  </div>
+
+  <canvas class="ink-sweep" id="sweep-header" aria-hidden="true"></canvas>
+
+  <!-- LARGE CHARCOAL WORKS -->
+  <div class="gallery-section" id="charcoal">
+    <span class="gallery-label">Charcoal</span>
+
+    <div class="gallery-grid">
+
+      <div class="gallery-item">
+        <img src="Gallery/drawing_dancer.jpg" alt="Figure in motion — charcoal" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Figure Legs · Charcoal · c. 2007</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="Gallery/drawing_vertical.jpg" alt="Organic forms — charcoal" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Form Study · Charcoal · c. 2008</div>
+      </div>
+
+      <div class="gallery-item" style="break-before: column;">
+        <img src="Gallery/drawing_horizontal.jpg" alt="Elemental study — charcoal" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Elemental study · Charcoal · 2008</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="sketch_bird.jpg" alt="Bird study — ink" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Bird study · Charcoal · 2011</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="sketch_portrait_orig.jpg" alt="Portrait study — pencil" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Face Gesture 1 · Pencil · 2012</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="sketch_portrait2_orig.jpg" alt="Portrait study 2 — pencil" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Face Gesture 2 · Pencil · 2012</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="sketch_face1_orig.jpg" alt="Face study — charcoal" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Face Gesture 3 · Charcoal · 2012</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="sketch_face2_orig.jpg" alt="Face study 2 — charcoal" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Face Gesture 4 · Charcoal · 2012</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FILM PHOTOGRAPHY -->
+  <div class="gallery-section" id="film">
+    <span class="gallery-label">Film Photography</span>
+
+    <div class="gallery-grid" style="columns: 1; max-width: 680px;">
+
+      <div class="gallery-item">
+        <img src="Gallery/photo_redwood.jpg" alt="Redwood trunks — film photography, 2007" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Cedar Trunk · Film photography · 2007</div>
+      </div>
+
+    </div>
+  </div>
+
+    <!-- VISUAL MERCHANDISING -->
+  <div class="gallery-section" id="merchandising">
+    <span class="gallery-label">Visual Merchandising</span>
+
+    <div class="gallery-grid" style="columns: 1; max-width: 680px;">
+
+      <div class="gallery-item">
+        <img src="Gallery/macy_juniors_after.jpg" alt="" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Macy's Juniors Dept · Visual Merchandising · 2009</div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="Gallery/macy_juniors_before.jpg" alt="" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Macy's Juniors Dept · Visual Merchandising · 2009</div>
+      </div>
+
+            <div class="gallery-item">
+        <img src="Gallery/macy_juniors_painted.jpg" alt="" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        <div class="caption">Macy's Juniors Dept · Visual Merchandising · 2009</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div class="footer-left">
+    <canvas class="stamp-canvas footer-stamp" data-seed="42" aria-hidden="true"></canvas>
+    <div class="contact">
+      <a href="mailto:mollie.e.munoz@gmail.com">mollie.e.munoz@gmail.com</a>
+      <a href="https://linkedin.com/in/molliemunoz" target="_blank">linkedin.com/in/molliemunoz</a>
+      <a href="https://github.com/momuno" target="_blank">github.com/momuno</a>
+    </div>
+  </div>
+  <div class="built">
+    Crafted with Claude<br>
+    <span style="opacity:0.8;">© Mollie E. Muñoz</span>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox">
+  <span class="lightbox-close">esc · click to close</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+
+
+<script src="main.js"></script>
+
+<script>
+// ── GALLERY PAGE INIT ──
+// Init all stamp marks
+document.querySelectorAll('.stamp-canvas').forEach(canvas => {
+  const seed = parseInt(canvas.dataset.seed || '1');
+  drawStamp(canvas, seed);
+});
+
+setTimeout(() => {
+  drawSweep(document.getElementById('sweep-header'),  3, 'hairline');
+}, 1000);
+setTimeout(() => {
+  drawSweep(document.getElementById('sweep-sketches'), 9, 'medium');
+  drawSweep(document.getElementById('sweep-photo'),    5, 'hairline');
+}, 1400);
+
+// ── SCROLL REVEAL ──
+setTimeout(() => {
+  const items = document.querySelectorAll('.gallery-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 120);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  items.forEach(el => observer.observe(el));
+}, 1400);
+</script>
+
+</body>
+</html>

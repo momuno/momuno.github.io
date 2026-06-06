@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semantic Kernel — Mollie E. Muñoz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:    #f7f5f1;
+    --ink:      oklch(0.22 0.005 60);
+    --dark-mid: oklch(0.32 0.005 60);
+    --mid:      oklch(0.42 0.005 60);
+    --light:    oklch(0.62 0.006 70);
+    --whisper:  oklch(0.78 0.006 75);
+    --faint:    #ece9e3;
+    --smudge:   #d8d4cc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Paper grain */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 999;
+    opacity: 0.45; mix-blend-mode: multiply;
+  }
+
+  #charcoal-cursor {
+    position: fixed; inset: 0;
+    z-index: 1000; pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 40;
+    background: rgba(247,245,241,0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--smudge);
+    padding: 0;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    padding: 0 clamp(2rem, 5vw, 5rem);
+  }
+
+  nav ul li a {
+    display: block;
+    padding: 1.2rem 2.2rem 1.2rem 0;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.88rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--mid);
+    text-decoration: none; transition: color 0.25s;
+  }
+
+  nav ul li a:hover { color: var(--ink); text-decoration: none; }
+  a { cursor: none; }
+
+  nav ul li a:hover .nav-underline {
+    text-decoration: underline;
+    text-decoration-color: var(--mid);
+    text-underline-offset: 4px;
+  }
+
+  /* ── CONTENT ── */
+  main {
+    width: 100%;
+    background: var(--paper);
+    position: relative; 
+    z-index: 1;
+  }
+
+  .content-wrap {
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 0 clamp(2rem, 5vw, 5rem);
+  }
+
+  /* ── HEADER ── */
+  .project-header {
+    padding: 5rem 0 1.5rem;
+  }
+
+  .project-eyebrow {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.88rem; 
+    letter-spacing: 0.38em;
+    text-transform: uppercase; 
+    color: var(--ink);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: m-fade 1.2s ease-out 0.3s forwards;
+  }
+
+  .project-header h1 {
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
+    font-weight: 400; font-style: italic;
+    letter-spacing: 0.02em; line-height: 1.1;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: m-rise 1.2s ease-out 0.3s forwards;
+  }
+
+  .project-meta {
+    display: flex; gap: 2rem; flex-wrap: wrap;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: m-fade 1.2s ease-out 0.6s forwards;
+  }
+
+  .project-meta span {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.82rem; 
+    letter-spacing: 0.28em;
+    text-transform: uppercase; 
+    color: var(--mid);
+  }
+
+  .project-description {
+    font-size: 1.25rem; 
+    line-height: 1.85;
+    color: var(--ink); 
+    font-style: italic;
+    font-weight: 400;
+    opacity: 0;
+    animation: m-fade 1.4s ease-out 0.9s forwards;
+  }
+
+  @keyframes m-rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes m-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── INK SWEEP WRAPPER — constrains and centers sweep width ── */
+  .sweep-wrap {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Ink sweep divider */
+  .ink-sweep {
+    margin: 1.5rem 0 2rem;
+  }
+
+  /* ── VIDEO GRID ── */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2.5rem 2rem;
+    padding: 0rem 0 5rem;
+    opacity: 0;
+    animation: m-fade 0.6s ease-out 1.2s forwards;
+  }
+
+  .video-item {
+    display: flex; flex-direction: column;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .video-item.visible {
+    opacity: 1; transform: none;
+  }
+
+  .video-thumb {
+    position: relative;
+    width: 100%; aspect-ratio: 16/9;
+    overflow: hidden; background: var(--faint);
+    display: block; text-decoration: none;
+    margin-bottom: 0rem;
+    cursor: none;
+  }
+
+  .video-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: opacity 0.3s ease;
+    filter: saturate(0.65) contrast(1.05);
+  }
+
+  .video-thumb:hover img {
+    opacity: 0.8;
+  }
+
+  /* Play indicator */
+  .video-thumb::after {
+    content: '▶';
+    position: absolute;
+    inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; color: var(--ink);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    background: rgba(247,245,241,0.5);
+  }
+
+  .video-thumb:hover::after {
+    opacity: 1;
+  }
+
+  .video-num {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.68rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--light);
+    margin-bottom: 0.4rem;
+  }
+
+  .video-title {
+    font-size: 1rem; font-weight: 400;
+    line-height: 1.35; color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+
+  .video-link {
+ font-family: 'Inconsolata', monospace;
+    font-size: 0.72rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--mid);
+    text-decoration: none;
+    border-bottom: 1px solid var(--smudge);
+    padding-bottom: 2px; display: inline-block;
+    align-self: flex-start;
+    transition: color 0.2s, border-color 0.2s;
+    margin-top: auto; padding-top: 0.5rem;
+    cursor: none;
+  }
+
+  .video-link:hover { border-color: var(--ink); }
+
+  /* ── CONTEXT NOTE ── */
+  .context-note {
+    max-width: 620px;
+    padding: 1.5rem 1.8rem;
+    border-left: 1px solid var(--ink);
+    font-style: italic; font-size: 0.95rem;
+    color: var(--mid); line-height: 1.8;
+    margin: 0 0 4rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    width: 100%;
+    background: var(--paper);
+    padding: 3rem clamp(2rem, 5vw, 5rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+  }
+
+  .footer-stamp {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    opacity: 0.75;
+  }
+
+  footer .contact a {
+    display: block;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.82rem; letter-spacing: 0.12em;
+    color: var(--mid); text-decoration: none;
+    line-height: 2.2; transition: color 0.2s;
+  }
+
+  footer .contact a:hover { color: var(--ink); }
+
+  footer .built {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.6rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--whisper);
+    text-align: right; line-height: 2;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 720px) {
+    .video-grid { grid-template-columns: 1fr; }
+    body { cursor: auto; }
+    #charcoal-cursor { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="charcoal-cursor" aria-hidden="true"></canvas>
+
+<nav>
+  <ul>
+    <li><a href="index.html#communication">← <span class="nav-underline">Portfolio</span></a></li>
+  </ul>
+</nav>
+
+<main>
+<div class="content-wrap">
+
+  <div class="project-header">
+    <p class="project-eyebrow">Information Design</p>
+    <h1>Semantic Kernel<br>Video Series</h1>
+    <div class="project-meta">
+      <span>Microsoft Developer YouTube · 2023 · 7 Episodes</span>
+    </div>
+    <p class="project-description">
+      Independently researched, scripted, and presented a learning arc for technology whose terminology was still being defined.
+    </p>
+  </div>
+
+  <div class="sweep-wrap"><canvas class="ink-sweep" id="sweep-header" aria-hidden="true"></canvas><div></div>
+
+  <div class="video-grid">
+
+    <div class="video-item">
+      <p class="video-num">Episode 01</p>
+      <a href="https://www.youtube.com/watch?v=XdzpJ0TFmXI" class="video-thumb" target="_blank">
+        <img src="https://img.youtube.com/vi/XdzpJ0TFmXI/maxresdefault.jpg" alt="What is an AI plugin?">
+      </a>
+      <a href="https://www.youtube.com/watch?v=XdzpJ0TFmXI" class="video-link" target="_blank">Watch on YouTube →</a>
+    </div>
+
+    <div class="video-item">
+      <p class="video-num">Episode 02</p>
+      <a href="https://www.youtube.com/watch?v=XXkkJlnMHIM" class="video-thumb" target="_blank">
+        <img src="https://img.youtube.com/vi/XXkkJlnMHIM/maxresdefault.jpg" alt="Why would you want to use an AI plugin?">
+      </a>
+      <a href="https://www.youtube.com/watch?v=XXkkJlnMHIM" class="video-link" target="_blank">Watch on YouTube →</a>
+    </div>
+
+    <div class="video-item">
+      <p class="video-num">Episode 03</p>
+      <a href="https://www.youtube.com/watch?v=BmUMuoj0kyE" class="video-thumb" target="_blank">
+        <img src="https://img.youtube.com/vi/BmUMuoj0kyE/maxresdefault.jpg" alt="How does an AI plugin work?">
+      </a>
+      <a href="https://www.youtube.com/watch?v=BmUMuoj0kyE" class="video-link" target="_blank">Watch on YouTube →</a>
+    </div>
+
+    <div class="video-item">
+      <p class="video-num">Episode 04</p>
+      <a href="https://www.youtube.com/watch?v=MsieBrr49o0" class="video-thumb" target="_blank">
+        <img src="https://img.youtube.com/vi/MsieBrr49o0/maxresdefault.jpg" alt="What is a local AI plugin?">
+      </a>
+      <a href="https://www.youtube.com/watch?v=MsieBrr49o0" class="video-link" target="_blank">Watch on YouTube →</a>
+    </div>
+
+    <div class="video-item">
+      <p class="video-num">Episode 05</p>
+      <a href="https://www.youtube.com/watch?v=bEnzgC-eYGc" class="video-thumb" target="_blank">
+        <img src="https://img.youtube.com/vi/bEnzgC-eYGc/maxresdefault.jpg" alt="What is a remote AI plugin?">
+      </a>
+      <a href="https://www.youtube.com/watch?v=bEnzgC-eYGc" class="video-link" target="_blank">Watch on YouTube →</a>
+    </div>
+
+    <div class="video-item">
+      <p class="video-num">Episode 06</p>
+      <a href="https://www.youtube.com/watch?v=afkQSZIqFTU" class="video-thumb" target="_blank">
+        <img src="https://img.youtube.com/vi/afkQSZIqFTU/maxresdefault.jpg" alt="Can I develop an AI application with Semantic Kernel that can call remote AI plugins?">
+      </a>
+      <a href="https://www.youtube.com/watch?v=afkQSZIqFTU" class="video-link" target="_blank">Watch on YouTube →</a>
+    </div>
+
+    <div class="video-item">
+      <p class="video-num">Episode 07</p>
+      <a href="https://www.youtube.com/watch?v=oS2LGl31o5s" class="video-thumb" target="_blank">
+        <img src="https://img.youtube.com/vi/oS2LGl31o5s/maxresdefault.jpg" alt="Can I develop a remote AI plugin to run on both ChatGPT and on Chat Copilot?">
+      </a>
+      <a href="https://www.youtube.com/watch?v=oS2LGl31o5s" class="video-link" target="_blank">Watch on YouTube →</a>
+    </div>
+
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div class="footer-left">
+    <canvas class="stamp-canvas footer-stamp" data-seed="42" aria-hidden="true"></canvas>
+    <div class="contact">
+      <a href="mailto:mollie.e.munoz@gmail.com">mollie.e.munoz@gmail.com</a>
+      <a href="https://linkedin.com/in/molliemunoz" target="_blank">linkedin.com/in/molliemunoz</a>
+      <a href="https://github.com/momuno" target="_blank">github.com/momuno</a>
+    </div>
+  </div>
+  <div class="built">
+    Crafted with Claude &amp; Midjourney<br>
+    <span style="opacity:0.8;">© Mollie E. Muñoz</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+
+<script>
+// ── SEMANTIC KERNEL PAGE INIT ──
+// Init all stamp marks
+document.querySelectorAll('.stamp-canvas').forEach(canvas => {
+  const seed = parseInt(canvas.dataset.seed || '1');
+  drawStamp(canvas, seed);
+});
+
+// Sweep
+setTimeout(() => {
+  drawSweep(document.getElementById('sweep-header'), 3, 'hairline');
+}, 1000);
+
+// ── SCROLL REVEAL ──
+// Wait for grid animation to finish before observing
+setTimeout(() => {
+  const items = document.querySelectorAll('.video-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 220);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  items.forEach(el => observer.observe(el));
+}, 1400); // 2800ms delay + 600ms fade = 3400ms
+</script>
+
+</body>
+</html>

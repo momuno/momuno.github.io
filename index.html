@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mollie E. Muñoz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:   #f7f5f1;
+    --ink:     oklch(0.22 0.005 60);
+    --dark-mid: oklch(0.32 0.005 60);
+    --mid:     oklch(0.42 0.005 60);
+    --light:   oklch(0.62 0.006 70);
+    --whisper: oklch(0.78 0.006 75);
+    --faint:   #ece9e3;
+    --smudge:  #d8d4cc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Paper grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.45;
+    mix-blend-mode: multiply;
+  }
+
+  /* Charcoal cursor canvas */
+  #charcoal-cursor {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  /* ── DANCER BACKGROUND — fixed behind opening only ── */
+  .dancer-bg {
+    position: fixed;
+    top: -10%; left: 0; right: 0;
+    height: 120vh;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .dancer-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.13;
+    mix-blend-mode: multiply;
+    -webkit-mask-image: radial-gradient(ellipse 80% 85% at center, black 30%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 85% at center, black 30%, transparent 100%);
+  }
+
+  @media (max-width: 720px) {
+    .dancer-bg img {
+      object-position: center 40%;
+      opacity: 0.1;
+      -webkit-mask-image: radial-gradient(ellipse 100% 70% at center, black 25%, transparent 100%);
+      mask-image: radial-gradient(ellipse 100% 70% at center, black 25%, transparent 100%);
+    }
+  }
+
+  /* ── OPENING ── */
+  .opening {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem clamp(2rem, 5vw, 5rem) 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── STAMP MARK ── */
+  .stamp-wrap {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+
+  /* Nav/main/footer cover the dancer as content scrolls over it */
+  nav, main, footer {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Nav always covers dancer */
+  nav { background: var(--paper); }
+
+  .opening-eyebrow {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.88rem;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: m-fade 1.2s ease-out 0.3s forwards;
+  }
+
+  .opening h1 {
+    font-weight: 300;
+    font-size: clamp(3rem, 9vw, 10rem);
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    white-space: nowrap;
+    opacity: 0;
+    animation: m-rise 1.6s ease-out 0.6s forwards;
+  }
+
+  .opening h1 em { font-style: italic; }
+
+  /* Flourish canvas sits here */
+  .opening-flourish {
+    margin: 1.2rem 0 1.8rem -0.3rem;
+    opacity: 0;
+    animation: m-fade 1.4s ease-out 1.8s forwards;
+  }
+
+  .opening-role {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--mid);
+    opacity: 0;
+    animation: m-fade 1.2s ease-out 2.1s forwards;
+  }
+
+  .opening-epigraph {
+    margin-top: 1.8rem;
+    max-width: 72ch;
+    font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+    line-height: 1.75;
+    color: var(--ink);
+    font-style: italic;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    animation: m-fade 1.4s ease-out 2.5s forwards;
+  }
+
+  @keyframes m-rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes m-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(247,245,241,0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--smudge);
+    padding: 0;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    padding: 0 clamp(2rem, 5vw, 5rem);
+  }
+
+  nav ul li a {
+    display: block;
+    padding: 1.2rem 2.2rem 1.2rem 0;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.88rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+
+  nav ul li a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--mid);
+    text-underline-offset: 4px;
+  }
+  a { cursor: none; }
+
+  /* ── MAIN ── */
+  /* Main is full width with solid bg — no gaps for dancer to show through */
+  main {
+    width: 100%;
+  }
+
+  /* Inner wrapper constrains content width and provides margins */
+  .content-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(2rem, 5vw, 5rem);
+  }
+
+  /* Full-width paper wrapper — covers dancer edge to edge */
+  .paper-zone {
+    background: var(--paper);
+    width: 100%;
+    padding: 4rem 0 6rem 0;
+  }
+
+  /* Full-bleed elements break out of content-wrap */
+  .ink-sweep, .drawing-interlude {
+    width: 100vw;
+    margin-left: calc(-1 * clamp(2rem, 5vw, 5rem));
+  }
+
+  /* ── SECTION HEADER — unified ── */
+  .section-head {
+    padding: 4rem 0 0;
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .section-head h2 {
+    font-size: clamp(1.9rem, 2.8vw, 2.6rem);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.04em;
+  }
+
+  .section-note {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.88rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+
+  /* ── INK SWEEP WRAPPER — constrains and centers sweep width ── */
+  .sweep-wrap {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Ink sweep divider */
+  .ink-sweep {
+    margin: 1.5rem 0 2rem;
+  }
+
+  .section-intro {
+    font-size: 1.25rem;
+    line-height: 1.85;
+    color: var(--ink);
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── FULL ENTRY — AI Interaction ── */
+  .entry-full {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 1.8rem 2.5rem;
+    align-items: start;
+    margin-bottom: 4rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--faint);
+  }
+
+  /* Entry header — year + title spans full width above image+text */
+  .entry-header {
+    margin-bottom: 1.2rem;
+  }
+
+  .entry-header h3 {
+    font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+    font-weight: 400;
+    line-height: 1.25;
+    margin-top: 0.5rem;
+  }
+
+  /* Entry left — just holds the image, no stacking needed anymore */
+  .entry-left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Inner content area: image + text side by side, reflection below */
+  .entry-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .entry-content-row {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 1rem 2rem;
+    align-items: start;
+  }
+
+  .entry-full.flip .entry-content-row {
+    grid-template-columns: 3fr 2fr;
+  }
+
+  .entry-full.flip .entry-content-row .entry-visual {
+    order: 2;
+  }
+
+  .entry-full.flip .entry-content-row .entry-text,
+  .entry-full.flip .entry-content-row .entry-body {
+    order: 1;
+  }
+
+  .entry-full .reflection {
+    width: 100%;
+    max-width: none;
+  }
+
+  .entry-visual {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .entry-visual img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .image-credit {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+    margin-left: 0.4em;
+    text-align: left;
+  }
+
+  .placeholder {
+    aspect-ratio: 4/3;
+    background: var(--faint);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .placeholder::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(26,24,20,0.03) 10px, rgba(26,24,20,0.03) 11px);
+  }
+  .placeholder span {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--light); position: relative; z-index: 1;
+    text-align: center; padding: 1rem; line-height: 2;
+  }
+
+  .entry-year {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.72rem; letter-spacing: 0.18em; color: var(--light); margin-bottom: 0.5rem;
+  }
+
+  .entry-text h3 {
+    font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+    font-weight: 400; line-height: 1.25; margin-bottom: 0.9rem;
+  }
+
+  .entry-body {
+    font-size: 1.07rem; font-weight: 400; letter-spacing: 0.008em; line-height: 1.85; color: var(--dark-mid);
+  }
+  .entry-body p { margin-bottom: 0.8rem; }
+
+  .reflection {
+    margin-top: 0.5rem; padding: 0.3rem 1.1rem;
+    border-left: 1px solid var(--ink);
+    font-style: italic; font-size: 0.95rem; color: var(--mid); line-height: 1.75;
+  }
+
+  .reflection a {
+    color: var(--dark-mid);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+
+  .reflection a:hover {
+    color: var(--ink);
+  }
+
+  .entry-link {
+    display: inline-block; margin-top: 0.9rem;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid var(--smudge); padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .entry-link:hover { border-color: var(--ink); }
+
+  /* Text-only entry — no image column */
+  .entry-full.text-only .entry-content-row {
+    grid-template-columns: 1fr;
+  }
+  .entry-full.text-only .entry-visual {
+    display: none;
+  }
+
+  /* Small entry — compact, reference only */
+  .entry-small {
+    display: grid; grid-template-columns: 52px 1fr;
+    gap: 1.2rem 2rem; align-items: start;
+    margin-bottom: 2.5rem; padding-bottom: 2.5rem;
+  }
+  .entry-small h3 { font-size: 1.05rem; font-weight: 400; line-height: 1.3; margin-bottom: 0.4rem; }
+  .entry-small .entry-body { font-size: 0.95rem; max-width: 60ch; }
+
+  /* ── TILE GRID — Communication, Visual ── */
+  .entries-mid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .entry-mid { padding-top: 1rem; }
+
+  .entry-mid h4 { font-size: 1.3rem; font-weight: 400; line-height: 1.3; margin-bottom: 0.35rem; }
+
+  .entry-mid .mid-visual {
+    width: 100%; aspect-ratio: 16/9; overflow: hidden;
+    margin-bottom: 0.9rem; background: var(--faint);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .entry-mid .mid-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .entry-mid .mid-visual span {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light);
+  }
+  .entry-mid p { font-size: 1.07rem; line-height: 1.75; color: var(--mid); }
+
+  /* ── MARGIN SKETCHES ── */
+  /* ── THUMBNAIL CARDS ── */
+  .thumbnails-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .thumbnail-label {
+    grid-column: 1 / -1;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--light); margin-bottom: 0.5rem;
+  }
+  .thumbnail-note {
+    background: rgba(251,250,247,0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(216,212,204,0.55);
+    padding: 1.4rem 1.6rem;
+    font-size: 1.02rem; line-height: 1.8;
+    color: var(--ink); font-style: normal;
+  }
+  .thumbnail-note strong {
+    font-style: normal;
+    font-weight: 500;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--ink);
+    font-size: 1.10rem;
+    letter-spacing: 0.01em;
+  }
+
+  .thumb-image {
+    margin-top: 1rem;
+    overflow: hidden;
+  }
+
+  .thumb-image img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    max-height: 220px;
+  }
+
+  /* ── IMAGE HOVER OVERLAY ── */
+  .img-overlay-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .img-overlay-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.4s ease;
+  }
+
+  .img-overlay-wrap:hover img {
+    opacity: .1;
+  }
+
+  .img-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    padding: 1.5rem;
+    text-align: center;
+    background: rgba(236,233,227,0.3);
+  }
+
+  .img-overlay::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 10px,
+      rgba(26,24,20,0.03) 10px, rgba(26,24,20,0.03) 11px
+    );
+  }
+
+  .img-overlay-wrap:hover .img-overlay {
+    opacity: 1;
+  }
+
+  .img-overlay-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--dark-mid);
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+  }
+
+  .img-overlay-mark {
+    width: 38px;
+    height: 38px;
+    opacity: 0.8;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── DRAWING INTERLUDE ── */
+  .drawing-interlude {
+    overflow: hidden;
+    margin: 2rem 0 2rem calc(-1 * clamp(2rem, 5vw, 5rem));
+    width: 100vw;
+  }
+  .drawing-interlude img {
+    width: 100%; max-height: 38vh; object-fit: cover;
+    object-position: center 30%; display: block; opacity: 0.45;
+  }
+
+  /* ── PATENTS — clean list, no section-head treatment ── */
+  .patents { 
+    padding: 4rem 0 3rem; 
+    margin-bottom: 3rem;
+  }
+  .patents h2 {
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    font-weight: 300; font-style: italic; margin-bottom: 1.5rem;
+    color: var(--mid);
+  }
+  .patent-list { list-style: none; }
+  .patent-list li {
+    display: grid; grid-template-columns: 80px 1fr; gap: 1rem;
+    padding: 0.9rem 0; border-top: 1px solid var(--faint);
+    align-items: baseline; font-size: 0.95rem; color: var(--mid); line-height: 1.6;
+  }
+  .patent-list li:last-child { border-bottom: 1px solid var(--faint); }
+  .patent-status {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light);
+    min-width: 7rem;
+    display: inline-block;
+  }
+
+    /* ── THUMBNAILS WINDOW — transparent, dancer shows through ── */
+  .thumbnails-window {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 4rem 0 6rem 0;
+    background: transparent;
+  }
+
+  .content-wrap-inset {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(2rem, 5vw, 5rem);
+  }
+
+  /* Text in window */
+  .thumbnails-window .section-head h2 { color: var(--ink); }
+  .thumbnails-window .thumbnail-label { color: var(--mid); }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+  }
+
+  .footer-stamp {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    opacity: 0.75;
+  }
+
+  /* ── DESIGNER'S STATEMENT WINDOW ── */
+  .statement-window {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 6rem 0 4rem;
+    background: transparent;
+  }
+
+  .statement-inset {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 clamp(2rem, 5vw, 5rem);
+  }
+
+  .statement-paper {
+    background: rgba(251,250,247,0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(216,212,204,0.5);
+    padding: 3rem 3.5rem;
+    margin-top: 2rem;
+  }
+
+  .statement-body {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--ink);
+    font-weight: 300;
+  }
+
+  .statement-body p { margin-bottom: 1.4rem; }
+
+  .statement-break {
+    width: 2rem; height: 1px;
+    background: var(--smudge);
+    margin: 2.5rem 0;
+  }
+
+  .statement-question {
+    font-size: 1.1rem;
+    padding: 1rem 0 1rem 1.4rem;
+    border-left: 1px solid var(--ink);
+    margin: 2rem 0 !important;
+  }
+
+  .statement-close { font-size: 1.1rem; color: var(--ink); }
+
+  .statement-signature { margin-top: 3rem; padding-top: 2rem; }
+
+  .statement-name {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 300; letter-spacing: -0.01em;
+    line-height: 0.95; font-style: normal;
+    color: var(--ink); margin-bottom: 1rem;
+  }
+
+  .statement-name em { font-style: italic; }
+
+  .statement-flourish { display: block; width: 280px; height: 32px; }
+
+  /* ── PATENTS WINDOW — transparent, narrow, centered ── */
+  .patents-window {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 4rem 0 6rem 0;
+    background: transparent;
+  }
+
+  .patents-inset {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 clamp(2rem, 5vw, 5rem);
+  }
+
+  .patents-window .patents {
+    background: rgba(251,250,247,0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(216,212,204,0.55);
+    padding: 2.5rem 3rem;
+    border-top: none;
+  }
+
+  .patents-window .patents h2 { color: var(--ink); }
+  .patents-window .patent-list li { color: var(--mid); }
+  .patents-window .patent-status { color: var(--light); }
+
+  /* ── EARLY WORK CONTEXT LIST ── */
+  .early-context-list {
+    list-style: none;
+    border-top: 1px solid var(--faint);
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .early-context-list li {
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 0.0rem 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--faint);
+    align-items: baseline;
+  }
+
+  .early-context-stamp {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    opacity: 0.6;
+    grid-column: 1;
+    grid-row: 1/3;
+    align-self: center;
+  }
+
+  .early-context-title {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--ink);
+    grid-column: 2; grid-row: 1;
+  }
+
+  .early-context-year {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    color: var(--light);
+    grid-column: 3; grid-row: 1;
+    text-align: right;
+  }
+
+  .early-context-note {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--mid);
+    grid-column: 2 / 4; grid-row: 2;
+  }
+
+  /* ── EARLY WORK SUB-LABELS ── */
+  .early-work-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin: 2.5rem 0 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--faint);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    width: 100%;
+    padding: 0;
+    position: relative;
+  }
+
+  .footer-inner {
+    position: absolute;
+    left: clamp(2rem, 5vw, 5rem);
+    right: clamp(2rem, 5vw, 5rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  footer .contact a {
+    display: block;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    color: var(--mid);
+    text-decoration: none;
+    line-height: 2.2;
+    transition: color 0.2s;
+  }
+
+  footer .contact a:hover { color: var(--ink); }
+
+  footer .built {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--whisper);
+    text-align: right;
+    line-height: 2;
+  }
+
+    /* ── FOOTER TRANSPARENT — dancer shows through at end ── */
+  .footer-transparent {
+    background: transparent !important;
+    height: 200px;
+  }
+
+  .footer-transparent .contact a { color: var(--mid); }
+  .footer-transparent .contact a:hover { color: var(--ink); }
+
+  .thumb-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .thumb-stamp {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 720px) {
+    .entry-full, .entry-full.flip {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .entry-full .stamp-wrap { display: none; }
+    .entry-content-row {
+      grid-template-columns: 1fr !important;
+    }
+    .entry-content-row .entry-visual { order: 1; }
+    .entry-content-row .entry-text   { order: 2; }
+    .entry-content .reflection       { order: 3; }
+    .entry-small { grid-template-columns: 1fr; }
+    .entries-mid { grid-template-columns: 1fr; }
+    body { cursor: auto; }
+    #charcoal-cursor { display: none; }
+  }
+
+  /* ── LIGHTBOX ── */
+  .gallery-lightbox { cursor: crosshair; }
+ 
+  .lightbox-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,24,20,0.88);
+    z-index: 3000;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+    cursor: none;
+  }
+ 
+  .lightbox-overlay.active {
+    opacity: 1; pointer-events: all;
+  }
+ 
+  .lightbox-overlay img {
+    max-width: 90vw; max-height: 90vh;
+    object-fit: contain;
+    box-shadow: 0 12px 60px rgba(0,0,0,0.5);
+    cursor: none;
+  }
+ 
+  .lightbox-close {
+    position: absolute;
+    top: 2rem; right: 2.5rem;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.7rem; letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(247,245,241,0.6);
+    cursor: none;
+    transition: color 0.2s;
+  }
+ 
+  .lightbox-close:hover { color: rgba(247,245,241,1); }
+
+</style>
+</head>
+<body>
+
+<!-- Fixed dancer background -->
+<div class="dancer-bg">
+  <img src="dancer_processed.jpg" alt="">
+</div>
+
+<!-- Charcoal cursor -->
+<canvas id="charcoal-cursor" aria-hidden="true"></canvas>
+
+<!-- OPENING -->
+<div class="opening">
+  <p class="opening-eyebrow">Portfolio</p>
+  <h1>Mollie E. <em>Muñoz</em></h1>
+  <div class="opening-flourish">
+    <canvas id="flourish-canvas" aria-hidden="true"></canvas>
+  </div>
+  <p class="opening-role">AI Interaction Designer &nbsp;·&nbsp; Information Designer &nbsp;·&nbsp; Software Engineer</p>
+  <p class="opening-epigraph">Designing the space between human and AI.</p>
+</div>
+
+<!-- NAV -->
+<nav>
+  <ul>
+    <li><a href="#ai-interaction">AI Interaction Design</a></li>
+    <li><a href="#thumbnails">Thumbnails</a></li>
+    <li><a href="#communication">Information Design</a></li>
+    <li><a href="#patents">Patents</a></li>
+    <li><a href="#early-work">Early Work</a></li>
+    <li><a href="#statement">Statement</a></li>
+  </ul>
+</nav>
+
+<main>
+<div class="paper-zone">
+<div class="content-wrap">
+
+  <!-- ══ AI INTERACTION DESIGN ══ -->
+  <div class="section-head" id="ai-interaction">
+    <h2>AI Interaction Design</h2>
+    <span class="section-note">2022 — Present</span>
+  </div>
+
+  <p class="section-intro reveal">
+    The question underneath every project: who is on the other side of this interaction, and what do they need to be more fully themselves? These projects span modalities, constraints, and years — but they're all attempts at the same thing.
+  </p>
+
+  <div class="sweep-wrap"><canvas class="ink-sweep" id="sweep-intro" aria-hidden="true"></canvas></div>
+
+  <!-- 1. AI-Adaptive UI -->
+  <div class="entry-full reveal">
+    <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="1" aria-hidden="true"></canvas></div>
+    <div class="entry-content">
+      <div class="entry-header">
+        <div class="entry-year">Spring 2026 — Present</div>
+        <h3>AI-Adaptive UI — Personalization by Design</h3>
+      </div>
+      <div class="entry-content-row">
+        <div class="entry-visual">
+          <div class="img-overlay-wrap">
+            <img src="LeadImages/adaptiveui-leadimage.png" style="object-position: center 20%;" alt="A split tree spanning two scenes.">
+            <div class="img-overlay">
+              <canvas class="stamp-canvas img-overlay-mark" data-seed="31" aria-hidden="true"></canvas>
+              <span class="img-overlay-label">In progress<br>Details upon disclosure</span>
+            </div>
+          </div>
+          <p class="image-credit">Image: Midjourney</p> 
+        </div>  
+        <div class="entry-body">
+          <p>A new AI product concept built from the ground up around the question: What should an application be like for <em>this</em> person, not for the market persona?</p>
+          <p>Most software is designed with a specific group of people in mind. But even within that group, the needs vary. Customization gets bolted on — a settings panel full of options, serving a pocket of edge cases while everyone else manages features they don't want.</p>
+          <p>This project takes a different approach: derive what a user needs from their data and build the experience around that — both persistently and on demand.</p>
+        </div>
+      </div>
+      <div class="reflection">
+        AI can generate UI on the fly — we're already seeing that. But people who return to an environment need consistency, not novelty.
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Interaction Contract / Artifact Creation -->
+  <div class="entry-full flip reveal">
+    <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="7" aria-hidden="true"></canvas></div>
+    <div class="entry-content">
+      <div class="entry-header">
+        <div class="entry-year">Winter 2026 — Present</div>
+        <h3>Reimagining the Human–AI Interaction Contract</h3>
+      </div>
+      <div class="entry-content-row">
+        <div class="entry-visual">
+          <div class="img-overlay-wrap">
+            <img src="LeadImages/artistcollaboration-leadimage.png" style="object-position: center 100%;" alt="Two artists collaborating on a large-scale artwork.">
+            <div class="img-overlay">
+              <canvas class="stamp-canvas img-overlay-mark" data-seed="25" aria-hidden="true"></canvas>
+              <span class="img-overlay-label">In progress<br>Details upon disclosure</span>
+            </div>
+          </div>
+          <p class="image-credit" style="text-align: right;">Image: Midjourney</p> 
+        </div> 
+        <div class="entry-body">
+          <p>Artifact creation in the AI era is perhaps at its highest dispense rate. While autonomous output is exciting, have we lost sight of the human process?</p>
+          <p>Considering how I collaborate with humans in real time and in the same room, I can see their thinking and respond to their ideas, choices, and actions, not just their end result. I'd like to have a similar experience <i>alongside</i> AI.</p>
+          <p>This shifts the design problem from output quality to interaction quality and raises a harder technical question: what has to be true about the system architecture for this experience to be possible?</p>
+        </div>
+      </div>
+      <div class="reflection">
+        Patent application in progress. Covers a technical design to support this experience.
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Document Generator -->
+  <div class="entry-full reveal">
+    <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="13" aria-hidden="true"></canvas></div>
+    <div class="entry-content">
+      <div class="entry-header">
+        <div class="entry-year">Summer 2025</div>
+        <h3>Dual-Modality Document Generator</h3>
+      </div>
+      <div class="entry-content-row">
+        <div class="entry-visual">
+          <img src="docgen_processed.jpg" alt="Document Generator UI" class="gallery-lightbox">
+        </div>
+        <div class="entry-body">
+          <p>Investigating how a document is decomposed, such that it can be built back up again using not a single prompt, but multiple sub-component prompts and manual text.</p>
+          <p>The prototype was then extended to explore a chat-driven application. Agent tool calls replaced traditional user UI interactions such as button clicks to accomplish desired outcomes.</p>
+          <p>Gradio was used as a trial for prototyping. We were curious if its built-in MCP server would be beneficial for the chat-driven portion. 
+          </p><a href="https://github.com/microsoft/recipe-tool/tree/main/apps/document-generator" class="entry-link" target="_blank">View GitHub →</a>
+        </div>
+      </div>
+      <div class="reflection">
+        My favorite learning was the user feedback — folks had a hard time understanding what to do with the app. I think a better design would have let the user discover the decomposition, rather than introducing them first to unintuitive modules.
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Reading Level Web Translator -->
+  <div class="entry-full reveal">
+    <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="17" aria-hidden="true"></canvas></div>
+    <div class="entry-content">
+      <div class="entry-header">
+        <div class="entry-year">September 2024 Hackathon · Spring 2026  </div>
+        <h3>Reading Level Web Translator</h3>
+      </div>
+      <div class="entry-content-row">
+        <div class="entry-visual">
+          <img src="LeadImages/accessingliteracy-leadimage.png" alt="Reading Level Web Translator" style="object-position: center right;" class="gallery-lightbox">
+        </div>
+        <div class="entry-body">
+          <p>This project is for children and adults, second language learners, and anyone who shouldn't need to go to a different application to access the same information designed for the default audience.</p> 
+          <p>The goal - a browser extension that renders an existing webpage at any reading level. For free. Starting with Wikipedia and building out.</p>
+          <p>The new extension has caching, progressive processing, and runs Llama 3.2 3B locally using WebLLM.</p>
+          <a href="https://www.youtube.com/watch?v=8kxyViU7wAg" class="entry-link" target="_blank">Original Demo →</a>
+          <a href="https://www.youtube.com/watch?v=GN1AAjfI3Ec" class="entry-link" target="_blank" style="margin-left:1rem;">New Demo →</a>
+          <a href="https://github.com/momuno/literacy-accessibility/tree/main" class="entry-link" target="_blank" style="margin-left:1rem;">View GitHub →</a>
+          <a href="https://github.com/momuno/literacy-accessibility/tree/main/literacy-extension#readme" class="entry-link" target="_blank" style="margin-left:1rem;">Try new extension →</a>
+        </div>
+      </div>
+      <div class="reflection">
+        <a href="https://www.barbarabush.org/wp-content/uploads/2020/09/BBFoundation_GainsFromEradicatingIlliteracy_9_8.pdf">Over half of American adults lack literacy proficiency</a>. Meet people where they are. Then help them grow.
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Spoken Narrative to Structured Doc -->
+  <div class="entry-full flip reveal">
+    <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="19" aria-hidden="true"></canvas></div>
+    <div class="entry-content">
+      <div class="entry-header">
+        <div class="entry-year">September 2022 Hackathon</div>
+        <h3>Spoken Narrative to Structured Documentation</h3>
+      </div>
+      <div class="entry-content-row">
+        <div class="entry-visual">
+          <img src="LeadImages/tutorialgenerator-leadimage.png" alt="Reading Level Web Translator" style="object-position: center left;" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+        </div>
+        <div class="entry-body">
+          <p>A hackathon project built around a problem that shouldn't exist: engineers who know their systems deeply but have to become professional writers to document them. The barrier isn't knowledge, it's the mode of output.</p>
+          <p>Instead, let someone speak naturally — stream of consciousness, jargon, asides and all — and have the system transform that spoken narrative into a structured, formatted guide others can use.  And let the engineer keep engineering.</p>
+          <p>I used Azure Cognitive Speech Services, C#, and GPT-3 with Completions API.</p>
+          <a href="https://www.youtube.com/watch?v=AD70lP7u_bE" class="entry-link" target="_blank">View Original Demo →</a>
+        </div>
+      </div>
+      <div class="reflection">
+        Related patent pending: Enhanced Generation of Formatted and Organized Guides from Unstructured Spoken Narrative Using Large Language Models.
+      </div>
+    </div>
+  </div>
+
+
+</div><!-- end content-wrap pre-thumbnails -->
+</div><!-- end paper-zone -->
+
+<!-- ══ THUMBNAILS WINDOW — transparent, dancer shows through ══ -->
+<div class="thumbnails-window">
+  <div class="content-wrap-inset">
+
+    <div class="section-head" id="thumbnails">
+      <h2>Thumbnails</h2>
+      <span class="section-note">2024 — 2025 &nbsp;·&nbsp; POCs &amp; quick sketches</span>
+    </div>
+
+    <p class="section-intro reveal" style="color: var(--ink);">
+      Proof-of-concepts that didn't become full projects — the work shifted, someone else picked up the idea, or it solved what it needed to solve and stayed in the margin.
+    </p>
+
+    <div class="thumbnails-section reveal">
+
+      <div class="thumbnail-note">
+        <div class="thumb-title-row"><canvas class="stamp-canvas thumb-stamp" data-seed="3" aria-hidden="true"></canvas><strong>Parallel Prototyping — Summer 2025</strong></div>
+        I created a script that used Claude to generate divergent directions on a problem, then spin up new instances of Claude Code in separate terminals. Each one ran as a subprocess and created whatever artifact it chose to. The challenge was display — the form an artifact would take was unknown.
+        <br>
+        <a href="https://github.com/momuno/parallel-prototype-testing" class="entry-link" target="_blank">View on Github → </a>
+        <div class="thumb-image">
+          <img src="LeadImages/multiterminal-leadimage.png" style="object-position: center 100%;" alt="Multi-terminal explorer">
+          <p class="image-credit">Image: Midjourney</p>
+        </div>
+      </div>
+
+      <div class="thumbnail-note">
+        <div class="thumb-title-row"><canvas class="stamp-canvas thumb-stamp" data-seed="9" aria-hidden="true"></canvas><strong>Canvas Workspace — Fall 2025</strong></div>
+        I wanted a space I could expand across monitors that tracked all my sessions and work, with notes to self and visual forking. A way to hold the shape of a divergent exploration, not just its outputs. This quick sketch helped me explain the types of features and experience I was looking for.
+        <br>
+        <span style="display: inline-block;margin-top: 0.9rem; font-family:'Inconsolata',monospace; font-size:0.74rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink); cursor:none;">Click Image to Expand →</span>
+        <div class="thumb-image">
+          <img src="LeadImages/canvas-leadimage.png" style="object-position: center 100%;" alt="Multi-terminal explorer" class="gallery-lightbox">
+        </div>
+      </div>
+
+      <div class="thumbnail-note">
+        <div class="thumb-title-row"><canvas class="stamp-canvas thumb-stamp" data-seed="15" aria-hidden="true"></canvas><strong>Spoken Interruption — Spring 2024</strong></div>
+        Humans interrupt each other, we should be able to interrupt an LLM too. I wired together Azure Cognitive Speech Services and a chat loop. When sound was detected, LLM response streaming text output stopped, and I appended to the chat history an interrupt-tag for LLM context. 
+        <br>
+        <a href="https://www.youtube.com/watch?v=cpUD-1h6KN0" class="entry-link" target="_blank">View Demo → </a>
+        <div class="thumb-image">
+          <img src="LeadImages/spokeninterruption-leadimage.png" style="object-position: center 100%;" alt="Multi-terminal explorer">
+          <p class="image-credit">Image: Midjourney</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div><!-- end thumbnails-window -->
+
+<div class="paper-zone">
+<div class="content-wrap">
+
+
+  <!-- ══ INFORMATION DESIGN ══ -->
+  <div class="section-head" id="communication">
+    <h2>Information Design</h2>
+    <span class="section-note">2022 — 2023</span>
+  </div>
+
+  <p class="section-intro reveal">
+    Designing how knowledge moves from someone who has it to someone who needs it. Different medium, same motivation.
+  </p>
+
+  <div class="sweep-wrap"><canvas class="ink-sweep" id="sweep-info" aria-hidden="true"></canvas></div>
+
+  <div class="entries-mid">
+
+    <div class="entry-mid reveal">
+      <div class="mid-visual">
+        <img src="LeadImages/youtube-leadimage.png" alt="Semantic Kernel video series" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+      </div>
+      <div class="entry-year">Fall 2023</div>
+      <h4>Semantic Kernel Video Series</h4>
+      <p>Independently researched, scripted, and presented a learning arc for tech whose terminology was being defined. Zero direction. I had to present as an expert on something being invented in real time.</p>
+      <a href="semantic-kernel.html" class="entry-link">View series →</a>
+    </div>
+
+    <div class="entry-mid reveal">
+      <div class="mid-visual">
+        <img src="LeadImages/aihackster-leadimage.png" style="object-position: center 46%;" alt="AI Development Tutorials for Makers" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+      </div>
+      <div class="entry-year">Fall 2022 · Published Summer 2023</div>
+      <h4>AI Development Tutorials for Makers</h4>
+      <p>Two tutorials for the Maker community on GitHub Copilot. Crafted the information architecture, visual layout, and technical content. Pre-ChatGPT, when AI development tooling was still nascent.</p>
+      <a href="https://www.hackster.io/491115/accelerate-your-arduino-projects-with-github-copilot-ai-64cfd8" class="entry-link" target="_blank">Article 1 → </a>
+      <a href="https://www.hackster.io/494454/tips-tricks-for-arduino-projects-with-github-copilot-ai-ec3a26" class="entry-link" target="_blank" style="margin-left:1rem;">Article 2 →</a>
+    </div>
+
+    <div class="entry-mid reveal">
+      <div class="mid-visual">
+        <img src="LeadImages/rtoshackster-leadingimage.png" alt="Azure RTOS ThreadX for Arduino" class="gallery-lightbox" data-lightbox-maxwidth="40vw">
+      </div>
+      <div class="entry-year">Fall 2022</div>
+      <h4>Azure RTOS ThreadX for Arduino</h4>
+      <p>A tutorial introducing real-time operating system concepts to the Maker community — making embedded systems threading accessible to Arduino developers. Designed and built both code and tutorial.</p>
+      <a href="https://www.hackster.io/485734/azure-rtos-threadx-for-arduino-101-threads-963a8d" class="entry-link" target="_blank">View on Hackster.io →</a>
+    </div>
+
+  </div>
+
+</div><!-- end content-wrap -->
+</div><!-- end paper-zone -->
+
+<!-- ══ PATENTS WINDOW — transparent, narrow, centered ══ -->
+<div class="patents-window">
+  <div class="patents-inset">
+    <div class="section-head" style="margin-bottom:1.5rem;" id="patents">
+      <h2>Patents</h2>
+      <span class="section-note">2023 — Present</span>
+    </div>
+    <p class="section-intro reveal" style="color: var(--ink);">Work at the intersection of AI systems and human interaction.</p>
+    <div class="patents">
+      <ul class="patent-list">
+        <li>
+          <span class="patent-status">Granted</span>
+          <span>
+            Real-Time System for Spoken Natural Stylistic Conversations with Large Language Models
+            <br>
+            <span class="patent-links">
+              <a href="https://ppubs.uspto.gov/api/pdf/downloadPdf/12437746?requestToken=eyJzdWIiOiJiOWIwMmFmNy1kZDY2LTQxMjItYmM0Yi03NDYxNTIwYWIzN2MiLCJ2ZXIiOiI0OTY5OGQyOC01MDE4LTQ3YjgtYjdjMS1jYzBlNjNiNjdlNWIiLCJleHAiOjB9" class="entry-link" style="margin-left:0; margin-top:0.5rem; display:inline-block;">View Patent →</a>
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="patent-status">Pending</span>
+          <span>
+            Enhanced Generation of Formatted and Organized Guides from Unstructured Spoken Narrative Using Large Language Models
+            <br>
+            <span class="patent-links"><a href="https://ppubs.uspto.gov/api/pdf/downloadPdf/20240386185?requestToken=eyJzdWIiOiJiOWIwMmFmNy1kZDY2LTQxMjItYmM0Yi03NDYxNTIwYWIzN2MiLCJ2ZXIiOiI0OTY5OGQyOC01MDE4LTQ3YjgtYjdjMS1jYzBlNjNiNjdlNWIiLCJleHAiOjB9" class="entry-link" style="margin-top:0.5rem; display:inline-block;">View Patent Application →</a></span>
+          </span>
+        </li>
+        <li>
+          <span class="patent-status">Pending</span>
+          <span>
+            Cyclic Behavior Detection in Generative Agents
+            <br>
+            <span class="patent-links"><a href="https://ppubs.uspto.gov/api/pdf/downloadPdf/20260017535?requestToken=eyJzdWIiOiJiOWIwMmFmNy1kZDY2LTQxMjItYmM0Yi03NDYxNTIwYWIzN2MiLCJ2ZXIiOiI0OTY5OGQyOC01MDE4LTQ3YjgtYjdjMS1jYzBlNjNiNjdlNWIiLCJleHAiOjB9" class="entry-link" style="margin-top:0.5rem; display:inline-block;">View Patent Application →</a></span>
+          </span>
+        </li>
+        <li>
+          <span class="patent-status">In progress</span>
+          <span>Additional application related to the Human-AI Interaction Contract work. Details upon disclosure.</span>
+        </li>
+      </ul>
+    </div>
+    </div><!-- end patents card -->
+  </div>
+</div><!-- end patents-window -->
+
+<div class="paper-zone">
+<div class="content-wrap">
+
+  <!-- ══ EARLY WORK ══ -->
+  <div class="section-head" id="early-work">
+    <h2>Early Work</h2>
+    <span class="section-note">2005 — 2020</span>
+  </div>
+
+  <p class="section-intro reveal">
+    The charcoal cursor you've been following through this page. The drawn lines between sections. The dancer behind your name when you arrived. They came from here. This work isn't a footnote to the AI work — it's the ground it stands on.
+  </p>
+
+  <div class="entries-mid">
+
+    <div class="entry-mid reveal">
+      <div class="mid-visual">
+        <img src="LeadImages/drawing-leadimage.jpg" style="object-position: center 48%;" alt="Charcoal and film — figure in motion" class="gallery-lightbox">
+      </div>
+      <div class="entry-year">2005–2008</div>
+      <h4>Charcoal &amp; Film</h4>
+      <p>I worked in charcoal because of the connected movement related to the surface. Film was an exploration of what I could envision and see. Both represent my mark and my presence, no mater how ephemeral.</p>
+      <a href="gallery.html" class="entry-link">View gallery →</a>
+    </div>
+
+    <div class="entry-mid reveal">
+      <div class="mid-visual">
+        <img src="LeadImages/urbanlegends-underground-leadimage.png" style="object-position: center 20%;" alt="Urban Legends of the Fall — The Daily Barometer" class="gallery-lightbox">
+      </div>
+      <div class="entry-year">October 2005</div>
+      <h4>Urban Legends of the Fall</h4>
+      <p>A three-part investigative series composed of original ideation, research, and writing. Awarded Second Place in the Oregon Newspaper Publishers Association collegiate competition. Published under Mollie Holmes.</p>
+      <a href="https://oregondigital.org/concern/documents/9c67wz016" class="entry-link" target="_blank">Article 1 →</a>
+      <a href="https://oregondigital.org/concern/documents/9c67wz02g" class="entry-link" target="_blank" style="margin-left:1rem;">Article 2 →</a>
+      <a href="https://oregondigital.org/concern/documents/9c67wz03r" class="entry-link" target="_blank" style="margin-left:1rem;">Article 3 →</a>
+    </div>
+
+    <div class="entry-mid reveal">
+      <div class="mid-visual">
+        <img src="LeadImages/macys-leadimage.jpg" style="object-position: center 50%;" alt="Macy's visual merchandising" class="gallery-lightbox" data-lightbox-maxwidth="30vw">
+      </div>
+      <div class="entry-year">2009–2011</div>
+      <h4>Visual Merchandising — Macy's</h4>
+      <p>Spatial design and user experience in retail. Painted murals, transformed departments, and staged seasonal experiences. Also led store to rank 1st in the Northwest region for in-store Shop-For-A-Cause event ticket sales.</p>
+      <a href="gallery.html" class="entry-link">View gallery →</a>
+    </div>
+
+  </div>
+
+  <!-- Additional context — line items -->
+  <ul class="early-context-list">
+    <li>
+      <canvas class="stamp-canvas early-context-stamp" data-seed="4" aria-hidden="true"></canvas>
+      <span class="early-context-title">Knowledge Transfer — HP PageWide T-Series</span>
+      <span class="early-context-year">2015–2020</span>
+      <span class="early-context-note">Consolidated and produced documentation across mechanical, firmware, ink, and hardware disciplines for an international manufacturing partner.</span>
+    </li>
+    <li>
+      <canvas class="stamp-canvas early-context-stamp" data-seed="23" aria-hidden="true"></canvas>
+      <span class="early-context-title">Mathematics Instruction &amp; Tutoring</span>
+      <span class="early-context-year">2009–2014</span>
+      <span class="early-context-note">Adult Learning &amp; Tutoring Certification. Taught college mathematics and customized individual approaches for non-traditional adult students.</span>
+    </li>
+    <li>
+      <canvas class="stamp-canvas early-context-stamp" data-seed="36" aria-hidden="true"></canvas>
+      <span class="early-context-title">The Contemporary Artist's Working Relationships: Understanding Restriction and Authority</span>
+      <span class="early-context-year">2008</span>
+      <span class="early-context-note">An undergraduate honors thesis in contemporary art, reviewing select works of Daniel Buren, Fred Wilson, Andrea Fraser, and Richard Serra.
+        <br> 
+        <a href="https://ir.library.oregonstate.edu/concern/honors_college_theses/5h73pz05z?locale=en" class="entry-link" target="_blank">View in the OSU Archive →</a>
+      </span>
+      
+    </li>
+  </ul>
+
+
+
+</div><!-- end content-wrap -->
+</div><!-- end paper-zone -->
+</main>
+
+<!-- ══ DESIGNER'S STATEMENT — floats over dancer ══ -->
+<div class="statement-window">
+  <div class="statement-inset">
+
+    <div class="section-head" id="statement">
+      <h2>Artist Statement</h2>
+      <span class="section-note">Thoughts on AI and the human mark</span>
+    </div>
+
+    <div class="statement-paper">
+      <div class="statement-body">
+
+      <p>My son is three years old.</p>
+
+      <p>When he finishes something — a drawing, a block tower, something he's never done before — he looks up and says <em>I did that.</em> Something that didn't exist before exists now, and no one will ever quite do it the way he did. It took effort, persistence, patience —  it took work. And it feels good.</p>
+
+      <p>I watch him and I think, <em>we are born with this</em>. But something in us as we age loses touch with it. We live in a world of consumption, of convenience, of outputs delivered instantly without effort. And some people, faced with the choice, decide they would rather have a generic representation of themselves than put in the work of making something their own.</p>
+
+      <p>I understand the temptation. I don't want it for my son.</p>
+
+      <p>Everything we interact with has the potential to shape how we see the world around us and how we see ourselves. That's why designing for this new interaction space isn't just important. It's one of the most human problems we have ever faced.</p>
+
+      <p>We are not interacting with software in its traditional sense. We are not querying a database or navigating a menu. We are in the presence of something that responds, that adapts, that can feel — to us — like another mind. That changes everything. Because how AI interacts with us, or fails to, will shape whether or not we believe our process, our presence, our mark, has value.</p>
+
+      <p class="statement-close"><em>I did that.</em> — That's what I'm designing for.</p>
+
+      <!-- Name + flourish -->
+    </div><!-- end statement-body -->
+    </div><!-- end statement-paper -->
+
+    <!-- Signature floats over dancer, outside the paper -->
+    <div class="statement-signature">
+      <div class="statement-name">Mollie E. <em>Muñoz</em></div>
+      <canvas class="statement-flourish" id="statement-flourish" aria-hidden="true"></canvas>
+    </div>
+
+  </div>
+</div><!-- end statement-window -->
+
+<!-- FOOTER -->
+<footer class="footer-transparent">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <canvas class="stamp-canvas footer-stamp" data-seed="42" aria-hidden="true"></canvas>
+      <div class="contact">
+        <a href="mailto:mollie.e.munoz@gmail.com">mollie.e.munoz@gmail.com</a>
+        <a href="https://linkedin.com/in/molliemunoz" target="_blank">linkedin.com/in/molliemunoz</a>
+        <a href="https://github.com/momuno" target="_blank">github.com/momuno</a>
+      </div>
+    </div>
+    <div class="built">
+      Crafted with Claude<br>& Midjourney<br>
+      <span style="opacity:0.8;">© Mollie E. Muñoz</span>
+    </div>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox">
+  <span class="lightbox-close">esc · click to close</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+
+<script src="main.js"></script>
+
+<script>
+// ── INDEX PAGE INIT ──
+// Init all stamp marks
+document.querySelectorAll('.stamp-canvas').forEach(canvas => {
+  const seed = parseInt(canvas.dataset.seed || '1');
+  drawStamp(canvas, seed);
+});
+
+drawFlourish(document.getElementById('flourish-canvas'));
+drawFlourish(document.getElementById('statement-flourish'));
+
+// Each sweep gets a genuinely different character
+const sweepConfig = [
+  { id: 'sweep-intro', seed: 2,  style: 'hairline' },
+  { id: 'sweep-info',  seed: 7,  style: 'hairline' },
+];
+sweepConfig.forEach(({ id, seed, style }) => {
+  drawSweep(document.getElementById(id), seed, style);
+});
+
+// ── SCROLL REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// ── LIGHTBOX ──
+(function() {
+  const overlay  = document.getElementById('lightbox');
+  const lightImg = document.getElementById('lightbox-img');
+  if (!overlay || !lightImg) return;
+ 
+  window.__crosshairActive = false;
+  window.__crosshairPos = { x: -200, y: -200 };
+ 
+  function drawCharcoalStick(ctx, angle) {
+    ctx.save();
+    ctx.rotate(angle);
+    const len = 22, wide = 2.8;
+    const grad = ctx.createLinearGradient(-wide, -len*0.5, wide*0.5, len*0.5);
+    grad.addColorStop(0,   'rgba(72,65,55,0.85)');
+    grad.addColorStop(0.3, 'rgba(42,37,30,0.92)');
+    grad.addColorStop(0.7, 'rgba(28,24,18,0.96)');
+    grad.addColorStop(1,   'rgba(18,15,10,0.99)');
+    ctx.beginPath();
+    ctx.moveTo(-wide*0.6,  len*0.5);
+    ctx.lineTo( wide*0.2,  len*0.3);
+    ctx.quadraticCurveTo(wide*0.2, 0, wide*0.3, -len*0.3);
+    ctx.lineTo(-wide*0.5, -len*0.5);
+    ctx.quadraticCurveTo(-wide*0.4, -len*0.8, -wide*0.8, len*0.2);
+    ctx.lineTo(-wide*0.8, len*0.4);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(-wide*0.2, -len*0.25);
+    ctx.quadraticCurveTo(wide*0.3, -len*0.35, wide*0.1, -len*0.5);
+    ctx.lineTo(-wide*0.2, -len*0.45);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(95,85,70,0.55)';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(0, -len*0.58, wide*0.3, wide*0.1, 0.2, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(40,36,28,0.18)';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(-wide*0.7, -len*0.15);
+    ctx.lineTo( wide*0.5, -len*0.1);
+    ctx.strokeStyle = 'rgba(15,12,8,0.2)';
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+    ctx.restore();
+  }
+ 
+  window.__drawCrosshair = function(ctx) {
+    if (!window.__crosshairActive) return;
+    const { x, y } = window.__crosshairPos;
+    ctx.save();
+    ctx.translate(x, y);
+    drawCharcoalStick(ctx, 0);
+    drawCharcoalStick(ctx, Math.PI / 2);
+    ctx.restore();
+  };
+ 
+  document.querySelectorAll('img.gallery-lightbox').forEach(img => {
+    img.addEventListener('mouseenter', () => {
+      window.__crosshairActive = true;
+      // Clear trail so charcoal marks don't bleed onto image
+      if (window.__trailPoints) window.__trailPoints.length = 0;
+    });
+    img.addEventListener('mouseleave', () => {
+      window.__crosshairActive = false;
+    });
+    img.addEventListener('mousemove', (e) => {
+      window.__crosshairPos = { x: e.clientX, y: e.clientY };
+    });
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.__crosshairActive = false;
+      lightImg.src = img.src;
+      lightImg.alt = img.alt;
+      lightImg.style.maxWidth = img.dataset.lightboxMaxwidth || '90vw';
+      overlay.classList.add('active');
+    });
+  });
+ 
+  overlay.addEventListener('click', () => overlay.classList.remove('active'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') overlay.classList.remove('active');
+  });
+})();
+</script>
+
+
+</body>
+</html>
