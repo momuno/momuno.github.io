@@ -188,7 +188,7 @@
     z-index: 40;
     background: rgba(247,245,241,0.97);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--light);
+    border-bottom: 1px solid var(--smudge);
     padding: 0;
   }
 
@@ -254,6 +254,7 @@
     align-items: baseline;
     gap: 1.2rem;
     flex-wrap: wrap;
+    scroll-margin-top: 60px; /* adjust to match your nav height */
   }
 
   .section-head h2 {
@@ -420,6 +421,17 @@
     border-color: var(--ink); 
   }
 
+  .non-link {
+    display: inline-block;
+    margin-top: 0.9rem; 
+    font-family:'Inconsolata', monospace; 
+    font-size:0.74rem; 
+    letter-spacing:0.14em; 
+    text-transform:uppercase; 
+    color:var(--ink); 
+    cursor:none;
+  }
+
   /* Text-only entry — no image column */
   .entry-full.text-only .entry-content-row {
     grid-template-columns: 1fr;
@@ -428,74 +440,6 @@
     display: none;
   }
 
-
-  /* ── TILE GRID — Communication, Visual ── */
-  .entries-mid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem 2rem;
-    margin-bottom: 3rem;
-  }
-
-  .entry-mid { padding-top: 1rem; }
-
-  .entry-mid h4 { font-size: 1.3rem; font-weight: 400; line-height: 1.3; margin-bottom: 0.35rem; }
-
-  .entry-mid .mid-visual {
-    width: 100%; aspect-ratio: 16/9; overflow: hidden;
-    margin-bottom: 0.9rem; background: var(--faint);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .entry-mid .mid-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .entry-mid .mid-visual span {
-    font-family: 'Inconsolata', monospace;
-    font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light);
-  }
-  .entry-mid p { font-size: 1.07rem; line-height: 1.75; color: var(--mid); }
-
-  /* ── MARGIN SKETCHES ── */
-  /* ── THUMBNAIL CARDS ── */
-  .thumbnails-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-  }
-  .thumbnail-label {
-    grid-column: 1 / -1;
-    font-family: 'Inconsolata', monospace;
-    font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase;
-    color: var(--light); margin-bottom: 0.5rem;
-  }
-  .thumbnail-note {
-    background: rgba(251,250,247,0.92);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 1px solid rgba(216,212,204,0.55);
-    padding: 1.4rem 1.6rem;
-    font-size: 1.02rem; line-height: 1.8;
-    color: var(--ink); font-style: normal;
-  }
-  .thumbnail-note strong {
-    font-style: normal;
-    font-weight: 500;
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--ink);
-    font-size: 1.10rem;
-    letter-spacing: 0.01em;
-  }
-
-  .thumb-image {
-    margin-top: 1rem;
-    overflow: hidden;
-  }
-
-  .thumb-image img {
-    width: 100%;
-    display: block;
-    object-fit: cover;
-    max-height: 220px;
-  }
 
   /* ── IMAGE HOVER OVERLAY ── */
   .img-overlay-wrap {
@@ -565,30 +509,60 @@
     z-index: 1;
   }
 
-
-  /* ── PATENTS — clean list, no section-head treatment ── */
-  .patents { 
-    padding: 4rem 0 3rem; 
+  /* ── MARGIN SKETCHES ── */
+  /* ── THUMBNAIL CARDS ── */
+  .thumbnails-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
     margin-bottom: 3rem;
   }
-  .patents h2 {
-    font-size: clamp(1.3rem, 2vw, 1.7rem);
-    font-weight: 300; font-style: italic; margin-bottom: 1.5rem;
-    color: var(--mid);
+
+  .thumbnail-note {
+    background: rgba(251,250,247,0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(216,212,204,0.55);
+    padding: 1.4rem 1.6rem;
+    font-size: 1.10rem;
+    letter-spacing: 0.01em; 
+    line-height: 1.8;
+    color: var(--dark-mid); 
+    font-style: normal;
   }
-  .patent-list { list-style: none; }
-  .patent-list li {
-    display: grid; grid-template-columns: 80px 1fr; gap: 1rem;
-    padding: 0.9rem 0; border-top: 1px solid var(--faint);
-    align-items: baseline; font-size: 0.95rem; color: var(--mid); line-height: 1.6;
+
+  .thumbnail-note strong {
+    font-size: 1.3rem; 
+    line-height: 1.3; 
+    color: var(--ink);
   }
-  .patent-list li:last-child { border-bottom: 1px solid var(--faint); }
-  .patent-status {
-    font-family: 'Inconsolata', monospace;
-    font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light);
-    min-width: 7rem;
-    display: inline-block;
+
+  .thumb-image {
+    margin-top: 1rem;
+    overflow: hidden;
   }
+
+  .thumb-image img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    max-height: 220px;
+  }
+
+  .thumb-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .thumb-stamp {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
 
     /* ── THUMBNAILS WINDOW — transparent, dancer shows through ── */
   .thumbnails-window {
@@ -599,30 +573,165 @@
     background: transparent;
   }
 
+  .thumb-date {
+    display: block;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.20em;
+    color: var(--light);
+  }
+
   .content-wrap-inset {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 clamp(2rem, 5vw, 5rem);
   }
 
-  /* Text in window */
-  .thumbnails-window .section-head h2 { color: var(--ink); }
-  .thumbnails-window .thumbnail-label { color: var(--mid); }
 
-  .footer-left {
-    display: flex;
-    align-items: center;
-    gap: 1.4rem;
+  /* ── PATENTS — clean list, no section-head treatment ── */
+  .patents { 
+    padding: 4rem 0 3rem; 
+    margin-bottom: 3rem;
+  }
+  .patent-list { list-style: none; }
+  .patent-list li {
+    display: grid; 
+    grid-template-columns: 110px 1fr; 
+    gap: 1rem;
+    padding: 0.9rem 0; 
+    border-top: 1px solid var(--faint);
+    align-items: baseline; 
+    font-size: 1.07rem; 
+    color: var(--mid); 
+    line-height: 1.75;
+  }
+  .patent-list li:last-child { border-bottom: 1px solid var(--faint); }
+  .patent-status {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.82rem; 
+    letter-spacing: 0.20em; 
+    text-transform: uppercase; 
+    color: var(--light);
+    min-width: 7rem;
+    display: inline-block;
   }
 
-  .footer-stamp {
-    width: 52px;
-    height: 52px;
+  /* ── PATENTS WINDOW — transparent, narrow, centered ── */
+  .patents-window {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 4rem 0 6rem 0;
+    background: transparent;
+  }
+
+  .patents-inset {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 clamp(2rem, 5vw, 5rem);
+  }
+
+  .patents-window .patents {
+    background: rgba(251,250,247,0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(216,212,204,0.55);
+    padding: 2.5rem 3rem;
+    border-top: none;
+  }
+
+  .patents-window .patents h2 { color: var(--ink); }
+  .patents-window .section-note { color: var(--mid); }
+  .patents-window .patent-list li { color: var(--mid); }
+  .patents-window .patent-status { color: var(--light); }
+
+    /* ── TILE GRID — Communication, Visual ── */
+  .entries-mid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .entry-mid { padding-top: 1rem; }
+
+  .entry-mid h4 { 
+    font-size: 1.3rem; 
+    font-weight: 400; 
+    line-height: 1.3; 
+    margin-bottom: 0.35rem; 
+  }
+
+  .entry-mid .mid-visual {
+    width: 100%; aspect-ratio: 16/9; overflow: hidden;
+    margin-bottom: 0.9rem; background: var(--faint);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .entry-mid .mid-visual img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block; 
+  }
+
+  .entry-mid p { 
+    font-size: 1.07rem; 
+    line-height: 1.75; 
+    color: var(--mid);
+  }
+
+  /* ── EARLY WORK CONTEXT LIST ── */
+  .early-context-list {
+    list-style: none;
+    border-top: 1px solid var(--faint);
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .early-context-list li {
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 0.0rem 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--faint);
+    align-items: baseline;
+  }
+
+  .early-context-stamp {
+    width: 28px;
+    height: 28px;
     flex-shrink: 0;
-    opacity: 0.75;
+    opacity: 0.6;
+    grid-column: 1;
+    grid-row: 1/3;
+    align-self: center;
   }
 
-  /* ── DESIGNER'S STATEMENT WINDOW ── */
+  .early-context-title {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--ink);
+    grid-column: 2; grid-row: 1;
+  }
+
+  .early-context-year {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    color: var(--light);
+    grid-column: 3; grid-row: 1;
+    text-align: right;
+  }
+
+  .early-context-note {
+    font-size: 1.07rem;
+    line-height: 1.75;
+    color: var(--mid);
+    grid-column: 2 / 4; grid-row: 2;
+  }
+
+/* ── DESIGNER'S STATEMENT WINDOW ── */
   .statement-window {
     position: relative;
     z-index: 2;
@@ -670,85 +779,6 @@
 
   .statement-flourish { display: block; width: 280px; height: 32px; }
 
-  /* ── PATENTS WINDOW — transparent, narrow, centered ── */
-  .patents-window {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    padding: 4rem 0 6rem 0;
-    background: transparent;
-  }
-
-  .patents-inset {
-    max-width: 1040px;
-    margin: 0 auto;
-    padding: 0 clamp(2rem, 5vw, 5rem);
-  }
-
-  .patents-window .patents {
-    background: rgba(251,250,247,0.92);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 1px solid rgba(216,212,204,0.55);
-    padding: 2.5rem 3rem;
-    border-top: none;
-  }
-
-  .patents-window .patents h2 { color: var(--ink); }
-  .patents-window .patent-list li { color: var(--mid); }
-  .patents-window .patent-status { color: var(--light); }
-
-  /* ── EARLY WORK CONTEXT LIST ── */
-  .early-context-list {
-    list-style: none;
-    border-top: 1px solid var(--faint);
-    margin-top: 1rem;
-    margin-bottom: 3rem;
-  }
-
-  .early-context-list li {
-    display: grid;
-    grid-template-columns: 50px 1fr auto;
-    grid-template-rows: auto auto;
-    gap: 0.0rem 1.5rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--faint);
-    align-items: baseline;
-  }
-
-  .early-context-stamp {
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
-    opacity: 0.6;
-    grid-column: 1;
-    grid-row: 1/3;
-    align-self: center;
-  }
-
-  .early-context-title {
-    font-size: 1.15rem;
-    font-weight: 400;
-    color: var(--ink);
-    grid-column: 2; grid-row: 1;
-  }
-
-  .early-context-year {
-    font-family: 'Inconsolata', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.16em;
-    color: var(--light);
-    grid-column: 3; grid-row: 1;
-    text-align: right;
-  }
-
-  .early-context-note {
-    font-size: 1.02rem;
-    line-height: 1.7;
-    color: var(--mid);
-    grid-column: 2 / 4; grid-row: 2;
-  }
-
 
   /* ── FOOTER ── */
   footer {
@@ -757,35 +787,58 @@
     position: relative;
   }
 
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    flex-direction: row; /* add this */
+  }
+
+  .footer-stamp {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    opacity: 0.75;
+  }
+
   .footer-inner {
-    position: absolute;
-    left: clamp(2rem, 5vw, 5rem);
-    right: clamp(2rem, 5vw, 5rem);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(2rem, 5vw, 5rem);
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
   }
 
+  .contact {
+    display: flex;
+    gap: 2.5rem; /* adjust as needed */
+  }
+
   footer .contact a {
-    display: block;
+    display: inline;
     font-family: 'Inconsolata', monospace;
     font-size: 0.82rem;
     letter-spacing: 0.12em;
-    color: var(--mid);
+    color: var(--dark-mid);
     text-decoration: none;
     line-height: 2.2;
     transition: color 0.2s;
   }
 
-  footer .contact a:hover { color: var(--ink); }
+  footer .contact a:hover { 
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 8px;
+  }
 
   footer .built {
     font-family: 'Inconsolata', monospace;
     font-size: 0.6rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--whisper);
+    color: var(--light);
     text-align: right;
     line-height: 2;
   }
@@ -793,25 +846,11 @@
     /* ── FOOTER TRANSPARENT — dancer shows through at end ── */
   .footer-transparent {
     background: transparent !important;
-    height: 200px;
+    height:250px;
   }
 
   .footer-transparent .contact a { color: var(--mid); }
   .footer-transparent .contact a:hover { color: var(--ink); }
-
-  .thumb-title-row {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .thumb-stamp {
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
-    opacity: 0.7;
-  }
 
   /* ── REVEAL ── */
   .reveal {
@@ -1092,7 +1131,13 @@
     <div class="thumbnails-section reveal">
 
       <div class="thumbnail-note">
-        <div class="thumb-title-row"><canvas class="stamp-canvas thumb-stamp" data-seed="3" aria-hidden="true"></canvas><strong>Parallel Prototyping — Summer 2025</strong></div>
+        <div class="thumb-title-row">
+          <canvas class="stamp-canvas thumb-stamp" data-seed="3" aria-hidden="true"></canvas>
+          <div>
+            <span class="thumb-date">Summer 2025</span>
+            <strong>Parallel Prototyping</strong>
+          </div>
+        </div>
         I created a script that used Claude to generate divergent directions on a problem, then spin up new instances of Claude Code in separate terminals. Each one ran as a subprocess and created whatever artifact it chose to. The challenge was display — the form an artifact would take was unknown.
         <br>
         <a href="https://github.com/momuno/parallel-prototype-testing" class="entry-link" target="_blank">View on Github → </a>
@@ -1103,17 +1148,29 @@
       </div>
 
       <div class="thumbnail-note">
-        <div class="thumb-title-row"><canvas class="stamp-canvas thumb-stamp" data-seed="9" aria-hidden="true"></canvas><strong>Canvas Workspace — Fall 2025</strong></div>
+        <div class="thumb-title-row">
+          <canvas class="stamp-canvas thumb-stamp" data-seed="3" aria-hidden="true"></canvas>
+          <div>
+            <span class="thumb-date">Fall 2025</span>
+            <strong>Canvas Workspace</strong>
+          </div>
+        </div>
         I wanted a space I could expand across monitors that tracked all my sessions and work, with notes to self and visual forking. A way to hold the shape of a divergent exploration, not just its outputs. This quick sketch helped me explain the types of features and experience I was looking for.
         <br>
-        <span style="display: inline-block;margin-top: 0.9rem; font-family:'Inconsolata',monospace; font-size:0.74rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink); cursor:none;">Click Image to Expand →</span>
+        <span class="non-link">Click Image to Expand →</span>
         <div class="thumb-image">
           <img src="LeadImages/canvas-leadimage.png" style="object-position: center 100%;" alt="Multi-terminal explorer" class="gallery-lightbox">
         </div>
       </div>
 
       <div class="thumbnail-note">
-        <div class="thumb-title-row"><canvas class="stamp-canvas thumb-stamp" data-seed="15" aria-hidden="true"></canvas><strong>Spoken Interruption — Spring 2024</strong></div>
+        <div class="thumb-title-row">
+          <canvas class="stamp-canvas thumb-stamp" data-seed="3" aria-hidden="true"></canvas>
+          <div>
+            <span class="thumb-date">Spring 2024</span>
+            <strong>Spoken Interruption</strong>
+          </div>
+        </div>
         Humans interrupt each other, we should be able to interrupt an LLM too. I wired together Azure Cognitive Speech Services and a chat loop. When sound was detected, LLM response streaming text output stopped, and I appended to the chat history an interrupt-tag for LLM context. 
         <br>
         <a href="https://www.youtube.com/watch?v=cpUD-1h6KN0" class="entry-link" target="_blank">View Demo → </a>
@@ -1220,7 +1277,7 @@
         </li>
         <li>
           <span class="patent-status">In progress</span>
-          <span>Additional application related to the Human-AI Interaction Contract work. Details upon disclosure.</span>
+          <span>Additional application related to the Human-AI Interaction Contract work.<br><p class="non-link">Details upon disclosure</p></span>
         </li>
       </ul>
     </div>
@@ -1282,19 +1339,19 @@
     <li>
       <canvas class="stamp-canvas early-context-stamp" data-seed="4" aria-hidden="true"></canvas>
       <span class="early-context-title">Knowledge Transfer — HP PageWide T-Series</span>
-      <span class="early-context-year">2015–2020</span>
-      <span class="early-context-note">Consolidated and produced documentation across mechanical, firmware, ink, and hardware disciplines for an international manufacturing partner.</span>
+      <span class="entry-year">2015–2020</span>
+      <span class="early-context-note">Consolidated and produced documentation across mechanical, firmware, and hardware disciplines for an international manufacturing partner.</span>
     </li>
     <li>
       <canvas class="stamp-canvas early-context-stamp" data-seed="23" aria-hidden="true"></canvas>
       <span class="early-context-title">Mathematics Instruction &amp; Tutoring</span>
-      <span class="early-context-year">2009–2014</span>
-      <span class="early-context-note">Adult Learning &amp; Tutoring Certification. Taught college mathematics and customized individual approaches for non-traditional adult students.</span>
+      <span class="entry-year">2009–2014</span>
+      <span class="early-context-note">Adult Learning &amp; Tutoring Certification. Taught college mathematics and customized approaches for non-traditional adult students.</span>
     </li>
     <li>
       <canvas class="stamp-canvas early-context-stamp" data-seed="36" aria-hidden="true"></canvas>
       <span class="early-context-title">The Contemporary Artist's Working Relationships: Understanding Restriction and Authority</span>
-      <span class="early-context-year">2008</span>
+      <span class="entry-year">2008</span>
       <span class="early-context-note">An undergraduate honors thesis in contemporary art, reviewing select works of Daniel Buren, Fred Wilson, Andrea Fraser, and Richard Serra.
         <br> 
         <a href="https://ir.library.oregonstate.edu/concern/honors_college_theses/5h73pz05z?locale=en" class="entry-link" target="_blank">View in the OSU Archive →</a>
@@ -1350,6 +1407,10 @@
 
 <!-- FOOTER -->
 <footer class="footer-transparent">
+  <br>
+  <br>
+  <br>
+  <br>
   <div class="footer-inner">
     <div class="footer-left">
       <canvas class="stamp-canvas footer-stamp" data-seed="42" aria-hidden="true"></canvas>
@@ -1360,8 +1421,8 @@
       </div>
     </div>
     <div class="built">
-      Crafted with Claude<br>& Midjourney<br>
-      <span style="opacity:0.8;">© Mollie E. Muñoz</span>
+      © Mollie E. Muñoz<br>Crafted with Claude
+      <span style="opacity:0.8;"></span>
     </div>
   </div>
 </footer>
