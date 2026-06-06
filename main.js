@@ -10,6 +10,7 @@
 
   // ── Trail canvas (existing fading trail) ──
   const ctx = trailCanvas.getContext('2d');
+  ctx.globalCompositeOperation = 'multiply';
   const dpr = window.devicePixelRatio || 1;
 
   const resize = () => {
@@ -46,7 +47,9 @@
   });
 
   const tick = () => {
+    ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+    ctx.globalCompositeOperation = 'multiply';
 
     // Draw fading trail
     for (let i = 1; i < points.length; i++) {
@@ -339,3 +342,115 @@ function drawStamp(canvas, seed) {
   };
   requestAnimationFrame(draw);
 }
+
+
+// ── INDEX PAGE INIT ──
+document.addEventListener('DOMContentLoaded', function() {
+
+// Init all stamp marks
+document.querySelectorAll('.stamp-canvas').forEach(canvas => {
+  const seed = parseInt(canvas.dataset.seed || '1');
+  drawStamp(canvas, seed);
+});
+
+drawFlourish(document.getElementById('flourish-canvas'));
+drawFlourish(document.getElementById('statement-flourish'));
+
+// Each sweep gets a genuinely different character
+const sweepConfig = [
+  { id: 'sweep-intro', seed: 2,  style: 'hairline' },
+  { id: 'sweep-info',  seed: 7,  style: 'hairline' },
+];
+sweepConfig.forEach(({ id, seed, style }) => {
+  drawSweep(document.getElementById(id), seed, style);
+});
+
+// ── SCROLL REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// ── LIGHTBOX ──
+(function() {
+  const overlay  = document.getElementById('lightbox');
+  const lightImg = document.getElementById('lightbox-img');
+  if (!overlay || !lightImg) return;
+ 
+  window.__crosshairActive = false;
+
+  // ── Crosshair canvas (separate from charcoal trail, uses mix-blend-mode: difference) ──
+  const xhCanvas = document.getElementById('crosshair-cursor');
+  let xhCtx = null;
+  if (xhCanvas) {
+    xhCtx = xhCanvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const resizeXh = () => {
+      xhCanvas.width  = window.innerWidth  * dpr;
+      xhCanvas.height = window.innerHeight * dpr;
+      xhCanvas.style.width  = window.innerWidth  + 'px';
+      xhCanvas.style.height = window.innerHeight + 'px';
+      xhCtx.scale(dpr, dpr);
+    };
+    resizeXh();
+    window.addEventListener('resize', resizeXh);
+  }
+
+function drawCrosshair(x, y) {
+  if (!xhCtx) return;
+  xhCtx.clearRect(0, 0, xhCanvas.width, xhCanvas.height);
+  xhCtx.save();
+  xhCtx.strokeStyle = 'white';
+  xhCtx.lineCap = 'round';
+  xhCtx.lineWidth = 1.5;
+
+  const outer = 14; // length of each arm
+  const gap   = 4;  // gap around center
+
+  xhCtx.beginPath();
+  // horizontal
+  xhCtx.moveTo(x - outer, y); xhCtx.lineTo(x - gap, y);
+  xhCtx.moveTo(x + gap,   y); xhCtx.lineTo(x + outer, y);
+  // vertical
+  xhCtx.moveTo(x, y - outer); xhCtx.lineTo(x, y - gap);
+  xhCtx.moveTo(x, y + gap);   xhCtx.lineTo(x, y + outer);
+  xhCtx.stroke();
+
+  xhCtx.restore();
+}
+
+  function clearCrosshair() {
+    if (!xhCtx) return;
+    xhCtx.clearRect(0, 0, xhCanvas.width, xhCanvas.height);
+  }
+
+  document.querySelectorAll('img.gallery-lightbox').forEach(img => {
+    img.addEventListener('mouseenter', () => {
+      window.__crosshairActive = true;
+      if (window.__trailPoints) window.__trailPoints.length = 0;
+    });
+    img.addEventListener('mouseleave', () => {
+      window.__crosshairActive = false;
+      clearCrosshair();
+    });
+    img.addEventListener('mousemove', (e) => {
+      drawCrosshair(e.clientX, e.clientY);
+    });
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.__crosshairActive = false;
+      lightImg.src = img.src;
+      lightImg.alt = img.alt;
+      lightImg.style.maxWidth = img.dataset.lightboxMaxwidth || '90vw';
+      overlay.classList.add('active');
+    });
+  });
+ 
+  overlay.addEventListener('click', () => overlay.classList.remove('active'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') overlay.classList.remove('active');
+  });
+})();
+
+}); // end DOMContentLoaded
