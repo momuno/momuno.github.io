@@ -397,28 +397,28 @@ reveals.forEach(el => observer.observe(el));
     window.addEventListener('resize', resizeXh);
   }
 
-function drawCrosshair(x, y) {
-  if (!xhCtx) return;
-  xhCtx.clearRect(0, 0, xhCanvas.width, xhCanvas.height);
-  xhCtx.save();
-  xhCtx.strokeStyle = 'white';
-  xhCtx.lineCap = 'round';
-  xhCtx.lineWidth = 1.5;
+  function drawCrosshair(x, y) {
+    if (!xhCtx) return;
+    xhCtx.clearRect(0, 0, xhCanvas.width, xhCanvas.height);
+    xhCtx.save();
+    xhCtx.strokeStyle = 'white';
+    xhCtx.lineCap = 'round';
+    xhCtx.lineWidth = 1.5;
 
-  const outer = 14; // length of each arm
-  const gap   = 4;  // gap around center
+    const outer = 14; // length of each arm
+    const gap   = 4;  // gap around center
 
-  xhCtx.beginPath();
-  // horizontal
-  xhCtx.moveTo(x - outer, y); xhCtx.lineTo(x - gap, y);
-  xhCtx.moveTo(x + gap,   y); xhCtx.lineTo(x + outer, y);
-  // vertical
-  xhCtx.moveTo(x, y - outer); xhCtx.lineTo(x, y - gap);
-  xhCtx.moveTo(x, y + gap);   xhCtx.lineTo(x, y + outer);
-  xhCtx.stroke();
+    xhCtx.beginPath();
+    // horizontal
+    xhCtx.moveTo(x - outer, y); xhCtx.lineTo(x - gap, y);
+    xhCtx.moveTo(x + gap,   y); xhCtx.lineTo(x + outer, y);
+    // vertical
+    xhCtx.moveTo(x, y - outer); xhCtx.lineTo(x, y - gap);
+    xhCtx.moveTo(x, y + gap);   xhCtx.lineTo(x, y + outer);
+    xhCtx.stroke();
 
-  xhCtx.restore();
-}
+    xhCtx.restore();
+  }
 
   function clearCrosshair() {
     if (!xhCtx) return;
@@ -446,11 +446,23 @@ function drawCrosshair(x, y) {
       overlay.classList.add('active');
     });
   });
- 
+  
   overlay.addEventListener('click', () => overlay.classList.remove('active'));
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') overlay.classList.remove('active');
+      if (e.key === 'Escape') overlay.classList.remove('active');
   });
 })();
+
+// Tap to toggle overlay on touch devices
+if (window.matchMedia('(hover: none)').matches) {
+  document.querySelectorAll('.img-overlay-wrap').forEach(wrap => {
+    wrap.addEventListener('click', () => {
+      const overlay = wrap.querySelector('.img-overlay');
+      const isVisible = overlay.style.opacity === '1';
+      overlay.style.opacity = isVisible ? '0' : '1';
+      wrap.querySelector('img').style.opacity = isVisible ? '1' : '0.1';
+    });
+  });
+}
 
 }); // end DOMContentLoaded

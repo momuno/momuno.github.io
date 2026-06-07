@@ -394,19 +394,8 @@
     font-style: italic; 
     font-size: 1.06rem; 
     letter-spacing: 0.02em;
-    color: var(--mid); 
+    color: var(--dark-mid); 
     line-height: 1.75;
-  }
-
-  .reflection a {
-    color: var(--dark-mid);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    transition: color 0.2s;
-  }
-
-  .reflection a:hover {
-    color: var(--ink);
   }
 
   .entry-link {
@@ -515,6 +504,13 @@
     z-index: 1;
   }
 
+  /* Keep overlay hidden by default on mobile too */
+  @media (hover: none) {
+    .img-overlay-wrap .img-overlay {
+      transition: opacity 0.3s ease;
+    }
+  }
+
   /* ── MARGIN SKETCHES ── */
   /* ── THUMBNAIL CARDS ── */
   .thumbnails-section {
@@ -579,6 +575,10 @@
     background: transparent;
   }
 
+  .thumbnails-window .section-note {
+    color: var(--mid);
+  }
+
   .thumb-date {
     display: block;
     font-family: 'Inconsolata', monospace;
@@ -608,7 +608,7 @@
     border-top: 1px solid var(--faint);
     align-items: baseline; 
     font-size: 1.07rem; 
-    color: var(--mid); 
+    color: var(--ink); 
     line-height: 1.75;
   }
   .patent-list li:last-child { border-bottom: 1px solid var(--faint); }
@@ -631,6 +631,10 @@
     background: transparent;
   }
 
+  .patents-window .section-note {
+    color: var(--mid);
+  }
+  
   .patents-inset {
     max-width: 1040px;
     margin: 0 auto;
@@ -645,11 +649,6 @@
     padding: 2.5rem 3rem;
     border-top: none;
   }
-
-  .patents-window .patents h2 { color: var(--ink); }
-  .patents-window .section-note { color: var(--mid); }
-  .patents-window .patent-list li { color: var(--mid); }
-  .patents-window .patent-status { color: var(--light); }
 
     /* ── TILE GRID — Communication, Visual ── */
   .entries-mid {
@@ -683,7 +682,7 @@
   .entry-mid p { 
     font-size: 1.07rem; 
     line-height: 1.75; 
-    color: var(--mid);
+    color: var(--dark-mid);
   }
 
   /* ── EARLY WORK CONTEXT LIST ── */
@@ -744,6 +743,10 @@
     width: 100%;
     padding: 6rem 0 4rem;
     background: transparent;
+  }
+
+  .statement-window .section-note {
+    color: var(--mid);
   }
 
   .statement-inset {
@@ -870,7 +873,7 @@
     height:250px;
   }
 
-  .footer-transparent .contact a { color: var(--mid); }
+  .footer-transparent .contact a { color: var(--dark-mid); }
   .footer-transparent .contact a:hover { color: var(--ink); }
 
   /* ── REVEAL ── */
@@ -1006,7 +1009,7 @@
   font-family: 'Inconsolata', monospace;
   font-size: 0.82rem; 
   letter-spacing: 0.28em;
-  text-transform: uppercase; color: var(--light);
+  text-transform: uppercase; color: var(--mid);
   margin-bottom: 2rem;
   display: block;
   opacity: 0;
@@ -1044,7 +1047,7 @@
   font-family: 'Inconsolata', monospace;
   font-size: 0.74rem; 
   letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--light);
+  text-transform: uppercase; color: var(--mid);
   line-height: 1.6;
 }
 
@@ -1139,7 +1142,7 @@
   font-size: 0.82rem; 
   letter-spacing: 0.28em;
   text-transform: uppercase; 
-  color: var(--light);
+  color: var(--mid);
   margin-bottom: 0.4rem;
 }
 
@@ -1163,15 +1166,6 @@
 .video-link:hover { 
   color: var(--ink); 
   border-color: var(--ink); 
-}
-
-.context-note {
-  max-width: 620px;
-  padding: 1.5rem 1.8rem;
-  border-left: 1px solid var(--ink);
-  font-style: italic; font-size: 0.95rem;
-  color: var(--mid); line-height: 1.8;
-  margin: 0 0 4rem;
 }
 
 @media (max-width: 720px) {
