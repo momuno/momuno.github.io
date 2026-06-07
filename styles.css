@@ -1064,18 +1064,8 @@
   width: 100%; display: block;
 }
 
-.gallery-sketches {
-  columns: 3;
-  column-gap: 1.2rem;
-  margin-bottom: 4rem;
-}
-
-@media (max-width: 720px) {
-  .gallery-grid, .gallery-sketches { columns: 1; }
-}
-
-@media (max-width: 500px) {
-  .gallery-sketches { columns: 2; }
+#merchandising {
+  scroll-margin-top: 80px;
 }
 
 /* ════════════════════════════════════
