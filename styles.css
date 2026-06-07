@@ -935,8 +935,38 @@
     }
 
     .statement-paper {
-      padding: 2rem 1.4rem;
+      padding: 2rem;
     }
+
+    .patents-window .patents {
+      padding: 2rem;
+    }
+
+    .footer-transparent {
+      height: auto;
+      padding: 3rem 2rem 2rem;
+      position: static;
+    }
+
+    .footer-transparent .footer-inner {
+      position: static;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .contact {
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .thumbnail-note {
+      display: flex;
+      flex-direction: column;
+    }
+    .thumbnail-note .thumb-title-row { order: 1; }
+    .thumbnail-note .thumb-image     { order: 2; margin-top: 0.8rem; margin-bottom: 0.8rem; }
+    .thumbnail-note .thumb-body      { order: 3; }
     body { cursor: auto; }
     #charcoal-cursor { display: none; }
     #crosshair-cursor { display: none; }

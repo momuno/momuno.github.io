@@ -233,8 +233,9 @@ function drawSweep(canvas, seed, style) {
 
 function drawFlourish(canvas) {
   if (!canvas) return;
-  const w = Math.min(420, window.innerWidth * 0.55);
-  const h = 60;
+  const maxW = 420, maxH = 60;
+  const w = Math.min(maxW, window.innerWidth * 0.55);
+  const h = Math.round(w * (maxH / maxW));
   const dpr = window.devicePixelRatio || 1;
   canvas.width  = w * dpr;
   canvas.height = h * dpr;
