@@ -466,4 +466,39 @@ if (window.matchMedia('(hover: none)').matches) {
   });
 }
 
+// ── MOBILE FULL-SCREEN NAV OVERLAY ──
+(function() {
+  const hamburger = document.querySelector('.nav-hamburger');
+  const overlay   = document.querySelector('.nav-overlay');
+  const closeBtn  = document.querySelector('.nav-overlay-close');
+  if (!hamburger || !overlay) return;
+
+  function openMenu() {
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+
+  // Close on any nav link tap
+  overlay.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', closeMenu);
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMenu();
+  });
+})();
+
 }); // end DOMContentLoaded
