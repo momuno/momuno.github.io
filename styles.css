@@ -1062,9 +1062,11 @@
     .entry-mid .entry-link,
     .entry-mid .non-link   { align-self: flex-start; }
 
-    .entry-body .entry-link {
+    .entry-link,
+    .non-link {
       display: block;
-      margin-left: 0;
+      margin-left: 0 !important;
+      width: fit-content;
     }
 
     .patent-list li {
@@ -1108,6 +1110,7 @@
 
     footer .built {
       text-align: left;
+      width: 100%;
     }
 
     .early-context-list li {
@@ -1116,8 +1119,8 @@
       gap: 0.1rem 1rem;
     }
     .early-context-stamp { grid-column: 1; grid-row: 1 / 3; align-self: center; }
-    .early-context-title { grid-column: 2; grid-row: 1; }
-    .early-context-year  { grid-column: 2; grid-row: 2; }
+    .early-context-year  { grid-column: 2; grid-row: 1; }
+    .early-context-title { grid-column: 2; grid-row: 2; }
     .early-context-note  { grid-column: 1 / 3; grid-row: 3; padding-top: 0.4rem; }
 
     .thumbnail-note {
