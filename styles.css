@@ -1282,6 +1282,149 @@
   scroll-margin-top: 80px;
 }
 
+.gallery-grid--three {
+  columns: 3;
+}
+
+@media (max-width: 720px) {
+  .gallery-grid--three {
+    columns: 1;
+  }
+}
+
+/* ── GALLERY ROW — equal thirds ── */
+.gallery-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.gallery-row .gallery-item {
+  margin-bottom: 0;
+}
+
+.gallery-row img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-row--square img {
+  aspect-ratio: 1/1;
+}
+
+@media (max-width: 720px) {
+  .gallery-row {
+    grid-template-columns: 1fr;
+  }
+  .gallery-row img {
+    aspect-ratio: 16/9;
+  }
+}
+
+/* ── GALLERY GROUP — hero + 2 supplementals ── */
+.gallery-group-label {
+  font-family: 'Inconsolata', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--light);
+  display: block;
+  margin-bottom: 0.6rem;
+  margin-top: 2rem;
+}
+
+.gallery-group {
+  break-inside: avoid;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  align-items: stretch;
+}
+
+.gallery-group-hero {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-group-hero img {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-group-supp {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-group-supp img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+
+/* Square variant — for 1×1 source images */
+.gallery-group--square .gallery-group-supp img {
+  aspect-ratio: 1/1;
+}
+
+.gallery-group--square .gallery-group-hero img {
+  aspect-ratio: unset;
+}
+
+/* Standalone portrait image */
+.gallery-portrait {
+  margin-bottom: 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.gallery-portrait .gallery-item {
+  width: 50%;
+}
+
+.gallery-portrait img {
+  width: 100%;
+  display: block;
+}
+
+.gallery-group .caption {
+  font-family: 'Inconsolata', monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  padding: 0.4rem 0 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .gallery-group {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .gallery-group-hero {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .gallery-group-hero img {
+    width: 100%;
+    aspect-ratio: 4/3;
+  }
+}
+
 /* ════════════════════════════════════
    SEMANTIC KERNEL PAGE
    ════════════════════════════════════ */
