@@ -78,12 +78,93 @@
 
   <div class="sweep-wrap"><canvas class="ink-sweep" id="sweep-intro" aria-hidden="true"></canvas></div>
 
-  <!-- 1. AI-Adaptive UI -->
-  <div class="entry-full reveal">
+  
+
+  <!-- 3. Document Generator -->
+  <div class="entry-full flip img-large reveal">
+    <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="15" aria-hidden="true"></canvas></div>
+    <div class="entry-content">
+      <div class="entry-header">
+        <div class="entry-year">Summer 2025</div>
+        <h3>Dual-Modality Document Generator</h3>
+      </div>
+      <div class="entry-content-row">
+        <div class="entry-visual">
+          <img src="LeadImages/docgen-leadimage.png" alt="UI for an app to generate documents using prompts and manual text" class="gallery-lightbox">
+        </div>
+        <div class="entry-body">
+          <p>Investigating how a document is decomposed, such that it can be built back up again using multiple sub-component prompts and text.</p>
+          <p>The prototype was then extended to explore a chat-driven application. Agent tool calls replaced traditional user interactions such as clicks to accomplish desired outcomes.</p>
+          <p>Gradio was used as a prototyping trial. We were curious if its built-in MCP server would benefit the chat portion. 
+          </p><a href="https://github.com/microsoft/recipe-tool/tree/main/apps/document-generator" class="entry-link" target="_blank">View GitHub →</a>
+        </div>
+      </div>
+      <div class="reflection">
+        My favorite learning was the user feedback — folks had a hard time understanding what to do with the app. I think a better design would have let the user discover the decomposition, rather than introducing them first to unintuitive modules.
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Reading Level Web Translator -->
+  <div class="entry-full img-large reveal">
+    <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="17" aria-hidden="true"></canvas></div>
+    <div class="entry-content">
+      <div class="entry-header">
+        <div class="entry-year">September 2024 Hackathon · Spring 2026  </div>
+        <h3>Reading Level Web Translator</h3>
+      </div>
+      <div class="entry-content-row">
+        <div class="entry-visual">
+          <img src="LeadImages/accessingliteracy-leadimage.jpg" alt="Screen shot of a Wikipedia page with the paragraphs being translated to a different reading level" style="object-position: center right;" class="gallery-lightbox">
+        </div>
+        <div class="entry-body">
+          <p>This project is for children and adults, second language learners, and anyone who shouldn't need to go to a different application to access the same information designed for the default audience.</p> 
+          <p>The goal - a browser extension that renders an existing webpage at any reading level. For free. Starting with Wikipedia and building out.</p>
+          <p>The new extension has caching, progressive processing, and runs Llama 3.2 3B locally.</p>
+          <div class="link-row">
+            <a href="https://www.youtube.com/watch?v=8kxyViU7wAg" class="entry-link" target="_blank">Original Demo →</a>
+            <a href="https://www.youtube.com/watch?v=GN1AAjfI3Ec" class="entry-link" target="_blank">New Demo →</a>
+            <a href="https://github.com/momuno/literacy-accessibility/tree/main/literacy-extension#readme" class="entry-link" target="_blank">New extension →</a>
+          </div>
+        </div>
+      </div>
+      <div class="reflection">
+        Meet people where they are. Then help them grow.
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Spoken Narrative to Structured Doc -->
+  <div class="entry-full flip img-large reveal">
+    <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="19" aria-hidden="true"></canvas></div>
+    <div class="entry-content">
+      <div class="entry-header">
+        <div class="entry-year">September 2022 Hackathon</div>
+        <h3>Spoken Narrative to Structured Documentation</h3>
+      </div>
+      <div class="entry-content-row">
+        <div class="entry-visual">
+          <img src="LeadImages/tutorialgenerator-leadimage.png" alt="Screen shot of the Spoken Narrative to Structured Documentation app interface" style="object-position: center left;" class="gallery-lightbox" data-lightbox-maxwidth="80vw">
+        </div>
+        <div class="entry-body">
+          <p>A hackathon project built around a problem that shouldn't exist: engineers who know their systems deeply but have to become professional writers to document them.</p>
+          <p>Instead, let someone speak naturally — stream of consciousness, jargon, asides and all — and have the system transform that into a structured, formatted guide others can use.</p>
+          <p>I used Azure Cognitive Services, C#, and GPT-3 with Completions.</p>
+          <a href="https://www.youtube.com/watch?v=AD70lP7u_bE" class="entry-link" target="_blank">View Original Demo →</a>
+        </div>
+      </div>
+      <div class="reflection">
+        Patent pending: Enhanced Generation of Formatted and Organized Guides from Unstructured Spoken Narrative Using Large Language Models.
+      </div>
+    </div>
+  </div>
+
+<!-- 1. AI-Adaptive UI -->
+  <div class="entry-full flip img-large reveal">
     <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="1" aria-hidden="true"></canvas></div>
     <div class="entry-content">
       <div class="entry-header">
-        <div class="entry-year">Spring 2026 — Present</div>
+        <div class="entry-year">IN PROGRESS: Spring 2026 — Present</div>
         <h3>AI-Adaptive UI — Personalization by Design</h3>
       </div>
       <div class="entry-content-row">
@@ -98,9 +179,9 @@
           <p class="image-credit">Image: Midjourney</p> 
         </div>  
         <div class="entry-body">
-          <p>A new AI product concept built from the ground up around the question: What should an app be like for <em>this</em> person, not for the market persona?</p>
-          <p>Most software is designed with a specific group of people in mind. But even within that group, the needs vary. Customization gets bolted on — a settings panel full of options, serving a pocket of edge cases while everyone else manages features they don't want.</p>
-          <p>This project takes a different approach: derive what a user needs from their data and build the experience around that — both persistently and on demand.</p>
+          <p>A new AI product concept built around the question: What should an app be like for <em>this</em> person, not for the market persona?</p>
+          <p>Most software is designed with a specific group of people in mind, but even within that group, needs vary.</p>
+          <p>Instead of customization options permanently affixed, this project takes a new approach — derive what a user needs from their data and build the experience around that, both persistently and on demand.</p>
         </div>
       </div>
       <div class="reflection">
@@ -110,11 +191,11 @@
   </div>
 
   <!-- 2. Interaction Contract / Artifact Creation -->
-  <div class="entry-full flip reveal">
+  <div class="entry-full img-large reveal">
     <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="7" aria-hidden="true"></canvas></div>
     <div class="entry-content">
       <div class="entry-header">
-        <div class="entry-year">Winter 2026 — Present</div>
+        <div class="entry-year">IN PROGRESS: Winter 2026 — Present</div>
         <h3>Reimagining the Human–AI Interaction Contract</h3>
       </div>
       <div class="entry-content-row">
@@ -130,8 +211,8 @@
         </div> 
         <div class="entry-body">
           <p>Artifact creation in the AI era is perhaps at its highest dispense rate. While autonomous output is exciting, have we lost sight of the human process?</p>
-          <p>Considering how I collaborate with humans in real time and in the same room, I can see their thinking and respond to their ideas, choices, and actions, not just their end result. I'd like to have a similar experience <i>alongside</i> AI.</p>
-          <p>This shifts the design problem from output quality to interaction quality and raises a harder technical question: what has to be true about the system architecture for this experience to be possible?</p>
+          <p>Considering how I collaborate with humans in real time and space, I'd like to have a similar experience <i>alongside</i> AI.</p>
+          <p>This shifts the design problem from output quality to interaction quality and raises harder technical questions about the system architecture.</p>
         </div>
       </div>
       <div class="reflection">
@@ -139,86 +220,6 @@
       </div>
     </div>
   </div>
-
-  <!-- 3. Document Generator -->
-  <div class="entry-full reveal">
-    <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="15" aria-hidden="true"></canvas></div>
-    <div class="entry-content">
-      <div class="entry-header">
-        <div class="entry-year">Summer 2025</div>
-        <h3>Dual-Modality Document Generator</h3>
-      </div>
-      <div class="entry-content-row">
-        <div class="entry-visual">
-          <img src="docgen_processed.jpg" alt="UI for an app to generate documents using prompts and manual text" class="gallery-lightbox">
-        </div>
-        <div class="entry-body">
-          <p>Investigating how a document is decomposed, such that it can be built back up again using not a single prompt, but multiple sub-component prompts and manual text.</p>
-          <p>The prototype was then extended to explore a chat-driven application. Agent tool calls replaced traditional user UI interactions such as button clicks to accomplish desired outcomes.</p>
-          <p>Gradio was used as a trial for prototyping. We were curious if its built-in MCP server would be beneficial for the chat-driven portion. 
-          </p><a href="https://github.com/microsoft/recipe-tool/tree/main/apps/document-generator" class="entry-link" target="_blank">View GitHub →</a>
-        </div>
-      </div>
-      <div class="reflection">
-        My favorite learning was the user feedback — folks had a hard time understanding what to do with the app. I think a better design would have let the user discover the decomposition, rather than introducing them first to unintuitive modules.
-      </div>
-    </div>
-  </div>
-
-  <!-- 4. Reading Level Web Translator -->
-  <div class="entry-full reveal">
-    <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="17" aria-hidden="true"></canvas></div>
-    <div class="entry-content">
-      <div class="entry-header">
-        <div class="entry-year">September 2024 Hackathon · Spring 2026  </div>
-        <h3>Reading Level Web Translator</h3>
-      </div>
-      <div class="entry-content-row">
-        <div class="entry-visual">
-          <img src="LeadImages/accessingliteracy-leadimage.jpg" alt="Screen shot of a Wikipedia page with the paragraphs being translated to a different reading level" style="object-position: center right;" class="gallery-lightbox">
-        </div>
-        <div class="entry-body">
-          <p>This project is for children and adults, second language learners, and anyone who shouldn't need to go to a different application to access the same information designed for the default audience.</p> 
-          <p>The goal - a browser extension that renders an existing webpage at any reading level. For free. Starting with Wikipedia and building out.</p>
-          <p>Now has caching, progressive processing, and runs Llama 3.2 3B locally.</p>
-          <a href="https://www.youtube.com/watch?v=8kxyViU7wAg" class="entry-link" target="_blank">Original Demo →</a>
-          <a href="https://www.youtube.com/watch?v=GN1AAjfI3Ec" class="entry-link" target="_blank" style="margin-left:1rem;">New Demo →</a>
-          <a href="https://github.com/momuno/literacy-accessibility/tree/main" class="entry-link" target="_blank" style="margin-left:1rem;">View GitHub →</a>
-          <a href="https://github.com/momuno/literacy-accessibility/tree/main/literacy-extension#readme" class="entry-link" target="_blank" style="margin-left:1rem;">Try new extension →</a>
-        </div>
-      </div>
-      <div class="reflection">
-        Meet people where they are. Then help them grow.
-      </div>
-    </div>
-  </div>
-
-  <!-- 5. Spoken Narrative to Structured Doc -->
-  <div class="entry-full flip reveal">
-    <div class="stamp-wrap"><canvas class="stamp-canvas" data-seed="19" aria-hidden="true"></canvas></div>
-    <div class="entry-content">
-      <div class="entry-header">
-        <div class="entry-year">September 2022 Hackathon</div>
-        <h3>Spoken Narrative to Structured Documentation</h3>
-      </div>
-      <div class="entry-content-row">
-        <div class="entry-visual">
-          <img src="LeadImages/tutorialgenerator-leadimage.png" alt="Screen shot of the Spoken Narrative to Structured Documentation app interface" style="object-position: center left;" class="gallery-lightbox" data-lightbox-maxwidth="80vw">
-        </div>
-        <div class="entry-body">
-          <p>A hackathon project built around a problem that shouldn't exist: engineers who know their systems deeply but have to become professional writers to document them. The barrier isn't knowledge, it's the mode of output.</p>
-          <p>Instead, let someone speak naturally — stream of consciousness, jargon, asides and all — and have the system transform that spoken narrative into a structured, formatted guide others can use.  And let the engineer keep engineering.</p>
-          <p>I used Azure Cognitive Speech Services, C#, and GPT-3 with Completions.</p>
-          <a href="https://www.youtube.com/watch?v=AD70lP7u_bE" class="entry-link" target="_blank">View Original Demo →</a>
-        </div>
-      </div>
-      <div class="reflection">
-        Patent pending: Enhanced Generation of Formatted and Organized Guides from Unstructured Spoken Narrative Using Large Language Models.
-      </div>
-    </div>
-  </div>
-
-
 </div><!-- end content-wrap pre-thumbnails -->
 </div><!-- end paper-zone -->
 
@@ -283,7 +284,7 @@
           </div>
         </div>
         <div class="thumb-body">
-        Humans interrupt each other, we should be able to interrupt an LLM too. I wired together Azure Cognitive Speech Services, a chat loop, and GPT-4. When sound was detected, response streaming text output stopped and I appended to the chat history an interrupt-tag for LLM context.
+        Humans interrupt each other, we should be able to interrupt an LLM. I wired together Azure Cognitive Speech Services, a chat loop, and GPT-4. When sound was detected, response streaming text output stopped and I appended to the chat history an interrupt-tag for context.
         <br>
         <a href="https://www.youtube.com/watch?v=cpUD-1h6KN0" class="entry-link" target="_blank">View Demo → </a>
         </div>
@@ -333,8 +334,10 @@
       <div class="entry-year">Fall 2022 · Published Summer 2023</div>
       <h4>AI Development Tutorials for Makers</h4>
       <p>Two tutorials for the Maker community on GitHub Copilot. Crafted the information architecture, visual layout, and technical content. Pre-ChatGPT, when AI development tooling was still nascent.</p>
-      <a href="https://www.hackster.io/491115/accelerate-your-arduino-projects-with-github-copilot-ai-64cfd8" class="entry-link" target="_blank">Article 1 → </a>
-      <a href="https://www.hackster.io/494454/tips-tricks-for-arduino-projects-with-github-copilot-ai-ec3a26" class="entry-link" target="_blank" style="margin-left:1rem;">Article 2 →</a>
+      <div class="link-row">
+        <a href="https://www.hackster.io/491115/accelerate-your-arduino-projects-with-github-copilot-ai-64cfd8" class="entry-link" target="_blank">Article 1 →</a>
+        <a href="https://www.hackster.io/494454/tips-tricks-for-arduino-projects-with-github-copilot-ai-ec3a26" class="entry-link" target="_blank">Article 2 →</a>
+      </div>
     </div>
 
     <div class="entry-mid reveal">
@@ -434,9 +437,11 @@
       <div class="entry-year">October 2005</div>
       <h4>Urban Legends of the Fall</h4>
       <p>A three-part investigative series composed of original ideation, research, and writing. Awarded Second Place in the Oregon Newspaper Publishers Association collegiate competition. Published under Mollie Holmes.</p>
-      <a href="https://oregondigital.org/concern/documents/9c67wz016" class="entry-link" target="_blank">Article 1 →</a>
-      <a href="https://oregondigital.org/concern/documents/9c67wz02g" class="entry-link" target="_blank" style="margin-left:1rem;">Article 2 →</a>
-      <a href="https://oregondigital.org/concern/documents/9c67wz03r" class="entry-link" target="_blank" style="margin-left:1rem;">Article 3 →</a>
+      <div class="link-row">
+        <a href="https://oregondigital.org/concern/documents/9c67wz016" class="entry-link" target="_blank">Article 1 →</a>
+        <a href="https://oregondigital.org/concern/documents/9c67wz02g" class="entry-link" target="_blank">Article 2 →</a>
+        <a href="https://oregondigital.org/concern/documents/9c67wz03r" class="entry-link" target="_blank">Article 3 →</a>
+      </div>
     </div>
 
     <div class="entry-mid reveal">

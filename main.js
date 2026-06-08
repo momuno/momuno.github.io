@@ -289,7 +289,7 @@ function drawFlourish(canvas) {
 // ── STAMP MARKS ──
 function drawStamp(canvas, seed) {
   if (!canvas) return;
-  const w = 64, h = 64;
+  const w = 78, h = 78;
   const dpr = window.devicePixelRatio || 1;
   canvas.width  = w * dpr;
   canvas.height = h * dpr;
