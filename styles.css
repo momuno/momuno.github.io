@@ -108,6 +108,11 @@
   .ink-sweep {
     margin: 1.5rem 0 2rem;
   }
+  #sweep-info,
+  #sweep-early {
+    margin-top: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
 
   /* ── OPENING ── */
   .opening {
@@ -439,6 +444,8 @@
     color: var(--mid);
     text-decoration: none;
     background: var(--faint);
+    border: 1px solid var(--smudge);
+    border-radius: 0;
     padding: 0.65em 0.85em 0.55em;
     line-height: 1;
     transition: background 0.2s, color 0.2s;
