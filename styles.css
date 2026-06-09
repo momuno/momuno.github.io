@@ -214,20 +214,14 @@
     letter-spacing: 0.25em;
     text-transform: uppercase;
     line-height: 1;
-    color: var(--dark-mid);
+    color: var(--ink);
     text-decoration: none;
     background: transparent;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    transition: background 0.2s;
   }
 
   nav ul li a:hover {
-    background: var(--faint);
-    color: var(--ink);
-    border-color: var(--dark-mid);
-    text-decoration: none;
-    text-underline-offset: 8px;
+    background: var(--smudge);
   }
   a { cursor: none; }
 
@@ -445,18 +439,14 @@
     color: var(--mid);
     text-decoration: none;
     background: var(--faint);
-    border: 1px solid var(--smudge);
-    border-radius: 4px;
-    padding: 0.42em 0.85em 0.28em;
+    padding: 0.65em 0.85em 0.55em;
     line-height: 1;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    transition: background 0.2s, color 0.2s;
   }
   .entry-link:hover {
     background: var(--smudge);
     color: var(--ink);
-    border-color: var(--mid);
   }
-
   .non-link {
     display: inline-block;
     margin-top: 0.9rem; 

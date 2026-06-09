@@ -37,12 +37,8 @@
       const d  = Math.hypot(e.clientX - last.x, e.clientY - last.y);
       w = Math.max(0.4, Math.min(2.4, 2.4 - (d/dt) * 1.6));
     }
-    // Offset trail to start from the tip of the stick
-    const angle = -Math.PI / 5;
-    const len = 20;
-    const tipX = e.clientX + Math.sin(angle) * len * 0.5;
-    const tipY = e.clientY - Math.cos(angle) * len * 0.5;
-    if (!window.__crosshairActive) points.push({ x: tipX, y: tipY, w, a: 0.32 });
+    // Tip is now at the mouse hotspot directly
+    if (!window.__crosshairActive) points.push({ x: e.clientX, y: e.clientY, w, a: 0.32 });
     last = { x: e.clientX, y: e.clientY, t: now };
   });
 
@@ -67,7 +63,9 @@
 
     // Draw charcoal stick at current mouse position
     if (!window.__crosshairActive) {
-      drawCharcoalStick(ctx, mouse.x, mouse.y);
+      // Offset so the tip of the stick lands on the mouse hotspot
+      // (tip is at ~(-5.9, -8.1) from center after -Math.PI/5 rotation)
+      drawCharcoalStick(ctx, mouse.x + 5.9, mouse.y + 8.1);
     }
 
     requestAnimationFrame(tick);
@@ -287,9 +285,9 @@ function drawFlourish(canvas) {
 }
 
 // ── STAMP MARKS ──
-function drawStamp(canvas, seed) {
+function drawStamp(canvas, seed, size) {
   if (!canvas) return;
-  const w = 78, h = 78;
+  const w = size || 78, h = size || 78;
   const dpr = window.devicePixelRatio || 1;
   canvas.width  = w * dpr;
   canvas.height = h * dpr;
@@ -361,10 +359,12 @@ drawFlourish(document.getElementById('statement-flourish'));
 const sweepConfig = [
   { id: 'sweep-intro', seed: 2,  style: 'hairline' },
   { id: 'sweep-info',  seed: 7,  style: 'hairline' },
+  { id: 'sweep-early', seed: 11, style: 'hairline' },
 ];
 sweepConfig.forEach(({ id, seed, style }) => {
   drawSweep(document.getElementById(id), seed, style);
 });
+
 
 // ── SCROLL REVEAL ──
 const reveals = document.querySelectorAll('.reveal');
