@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inconsolata:wght@300;400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inconsolata:wght@300;400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
 
 :root {
     --paper:   #f7f5f1;
@@ -565,23 +565,35 @@
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     border: 1px solid rgba(216,212,204,0.55);
-    padding: 1.4rem 1.6rem;
-    font-size: 1.1rem;
-    letter-spacing: 0.01em; 
+    padding: 1.9rem 2rem 1.4rem;
+    font-size: 1.0rem;
+    letter-spacing: 0.02em;
     line-height: 1.8;
-    color: var(--dark-mid); 
+    color: var(--dark-mid);
     font-style: normal;
+    display: flex;
+    flex-direction: column;
   }
 
   .thumbnail-note h4 {
-    font-size: 1.55rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
     font-weight: 500;
     line-height: 1.3;
     color: var(--ink);
   }
 
+  .thumb-action {
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+  .thumb-action .entry-link,
+  .thumb-action .non-link {
+    margin-top: 0;
+  }
+
   .thumb-image {
-    margin-top: 1rem;
+    padding-top: 0.75rem;
     overflow: hidden;
   }
 
@@ -650,7 +662,8 @@
     align-items: baseline;
     font-family: 'Lora', serif;
     font-size: 1.0rem;
-    color: var(--ink);
+    letter-spacing: 0.02em;
+    color: var(--dark-mid);
     line-height: 1.75;
   }
   .patent-list li:last-child { border-bottom: 1px solid var(--faint); }
@@ -703,7 +716,8 @@
   .entry-mid { padding-top: 1rem; }
 
   .entry-mid h4 {
-    font-size: 1.55rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
     font-weight: 500;
     line-height: 1.3;
     margin-bottom: 0.35rem;
@@ -745,7 +759,7 @@
     display: grid;
     grid-template-columns: 50px 1fr auto;
     grid-template-rows: auto auto;
-    gap: 0.0rem 1.5rem;
+    gap: 0.0rem 2rem;
     padding: 1.1rem 0;
     border-bottom: 1px solid var(--faint);
     align-items: baseline;
@@ -756,17 +770,18 @@
   }
 
   .early-context-stamp {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     flex-shrink: 0;
     opacity: 0.6;
     grid-column: 1;
     grid-row: 1/3;
-    align-self: center;
+    align-self: start;
+    margin-top: 0.25rem;
   }
 
   .early-context-title {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: 500;
     color: var(--ink);
     grid-column: 2; grid-row: 1;
@@ -783,8 +798,9 @@
 
   .early-context-note {
     font-size: 1.0rem;
+    letter-spacing: 0.02em;
     line-height: 1.8;
-    color: var(--mid);
+    color: var(--dark-mid);
     font-weight: 400;
     font-family: 'Lora', serif;
     grid-column: 2 / 4; grid-row: 2;
