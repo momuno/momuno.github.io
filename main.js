@@ -476,6 +476,7 @@ if (window.matchMedia('(hover: none)').matches) {
   function openMenu() {
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
+    overlay.removeAttribute('inert');
     hamburger.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   }
@@ -483,6 +484,7 @@ if (window.matchMedia('(hover: none)').matches) {
   function closeMenu() {
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden', 'true');
+    overlay.setAttribute('inert', '');
     hamburger.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
   }
