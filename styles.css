@@ -309,7 +309,7 @@
   }
 
   .section-head h2 {
-    font-size: clamp(2.2rem, 3.8vw, 3.8rem);
+    font-size: clamp(2.6rem, 3.8vw, 3.8rem);
     font-weight: 500;
     font-style: italic;
     letter-spacing: 0.04em;
@@ -369,7 +369,7 @@
   }
 
   .entry-header h3 {
-    font-size: clamp(1.35rem, 2.3vw, 2.3rem);
+    font-size: clamp(1.9rem, 2.3vw, 2.3rem);
     font-weight: 500;
     line-height: 1.25;
     margin-top: 0.5rem;
@@ -1006,10 +1006,11 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 720px) {
-    html, body { overflow-x: hidden; }
+    html, body { overflow-x: clip; }
 
     /* Hide desktop nav links, show hamburger */
     nav ul { display: none; }
+    nav.nav-simple ul { display: flex; }
 
     .nav-hamburger {
       display: flex;
@@ -1118,7 +1119,7 @@
 
     .nav-overlay-nav ol li a {
       display: block;
-      padding: 1.2rem 0;
+      padding: 1.2rem 1rem;
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(1.6rem, 7vw, 2.4rem);
       font-weight: 300;
@@ -1169,7 +1170,8 @@
     .entry-mid .mid-visual { order: 3; margin-top: 0.8rem; margin-bottom: 0.9rem; }
     .entry-mid p,
     .entry-mid .entry-link,
-    .entry-mid .non-link   { order: 4; }
+    .entry-mid .non-link,
+    .entry-mid .link-row   { order: 4; }
     .entry-mid .entry-link,
     .entry-mid .non-link   { align-self: flex-start; }
 
@@ -1195,13 +1197,15 @@
       padding: 2rem;
     }
 
-    .footer-transparent {
+    .footer-transparent,
+    footer {
       height: auto;
       padding: 3rem 2rem 2rem;
       position: static;
     }
 
-    .footer-transparent .footer-inner {
+    .footer-transparent .footer-inner,
+    .footer-inner {
       position: static;
       flex-direction: column;
       align-items: flex-start;
@@ -1225,11 +1229,11 @@
     }
 
     .early-context-list {
-      padding: 0 1.2rem;
+      padding: 1.5rem 2rem;
     }
 
     .early-context-list li {
-      grid-template-columns: 50px 1fr;
+      grid-template-columns: 62px 1fr;
       grid-template-rows: auto auto auto;
       gap: 0.1rem 1rem;
     }
@@ -1242,9 +1246,11 @@
       display: flex;
       flex-direction: column;
     }
+    .thumbnail-note { padding-bottom: 2.2rem; }
     .thumbnail-note .thumb-title-row { order: 1; }
     .thumbnail-note .thumb-image     { order: 2; margin-top: 0.8rem; margin-bottom: 0.8rem; }
     .thumbnail-note .thumb-body      { order: 3; }
+    .thumbnail-note .thumb-action    { order: 4; margin-top: 0.5rem; }
     body { cursor: auto; }
     #charcoal-cursor { display: none; }
     #crosshair-cursor { display: none; }
@@ -1395,10 +1401,6 @@
   letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--mid);
   line-height: 1.6;
-}
-
-#merchandising {
-  scroll-margin-top: 80px;
 }
 
 .gallery-grid--three {
