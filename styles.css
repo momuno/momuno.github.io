@@ -606,7 +606,7 @@
     flex-direction: column;
   }
 
-  .thumbnail-note h4 {
+  .thumbnail-note h3 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.6rem;
     font-weight: 500;
@@ -746,7 +746,7 @@
 
   .entry-mid { padding-top: 1rem; }
 
-  .entry-mid h4 {
+  .entry-mid h3 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.9rem;
     font-weight: 500;
@@ -1161,7 +1161,7 @@
       padding-bottom: 0;
     }
     .entry-mid .entry-year { order: 1; }
-    .entry-mid h4          { order: 2; }
+    .entry-mid h3          { order: 2; }
     .entry-mid .mid-visual { order: 3; margin-top: 0.8rem; margin-bottom: 0.9rem; }
     .entry-mid p,
     .entry-mid .entry-link,
