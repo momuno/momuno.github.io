@@ -79,8 +79,12 @@
 
   /* When cursor is off — restore system cursor everywhere */
   body.cursor-off { cursor: auto !important; }
-  body.cursor-off a { cursor: auto !important; }
-  body.cursor-off .gallery-lightbox { cursor: auto !important; }
+  body.cursor-off a,
+  body.cursor-off button,
+  body.cursor-off .cursor-toggle,
+  body.cursor-off .video-thumb,
+  body.cursor-off .video-link { cursor: pointer !important; }
+  body.cursor-off .gallery-lightbox { cursor: crosshair !important; }
   body.cursor-off #charcoal-cursor,
   body.cursor-off #crosshair-cursor { display: none; }
 
@@ -1324,17 +1328,19 @@
 .project-meta span {
   font-family: 'Inconsolata', monospace;
   font-size: 0.82rem;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--mid);
+  color: var(--dark-mid);
 }
 
 .project-description {
-  font-size: clamp(1.15rem, 1.3vw, 1.3rem);
+  font-family: 'Lora', serif;
+  font-weight: 400;
+  font-size: 1.1rem;
   line-height: 1.85;
+  letter-spacing: 0.01em;
   color: var(--ink);
-  font-style: italic;
-  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
   opacity: 0;
   animation: m-fade 1.4s ease-out 0.9s forwards;
 }
@@ -1598,33 +1604,35 @@
 
 .video-num {
   font-family: 'Inconsolata', monospace;
-  font-size: 0.82rem; 
-  letter-spacing: 0.28em;
-  text-transform: uppercase; 
-  color: var(--mid);
+  font-size: 0.82rem;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--dark-mid);
   margin-bottom: 0.4rem;
 }
 
 .video-link {
-  font-family: 'Inconsolata', monospace;
-  font-size: 0.74rem; 
-  letter-spacing: 0.14em;
-  text-transform: uppercase; 
-  color: var(--mid);
-  text-decoration: none;
-  border-bottom: 1px solid var(--whisper);
-  padding-bottom: 2px; 
   display: inline-block;
   align-self: flex-start;
-  transition: border-color 0.2s;
-  margin-top: auto; 
-  padding-top: 0.5rem;
+  margin-top: 0.75rem;
+  font-family: 'Inconsolata', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  background: var(--faint);
+  border: 1px solid var(--smudge);
+  border-radius: 0;
+  padding: 0.65em 0.85em 0.55em;
+  line-height: 1;
+  transition: background 0.2s, color 0.2s;
   cursor: none;
 }
 
-.video-link:hover { 
-  color: var(--ink); 
-  border-color: var(--ink); 
+.video-link:hover {
+  background: var(--smudge);
+  color: var(--ink);
 }
 
 @media (max-width: 720px) {

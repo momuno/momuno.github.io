@@ -10,9 +10,9 @@
 </head>
 <body>
 
-<!-- Fixed background -->
-<div class="bg">
-  <img src="LeadImages/background.jpg" alt="Charcoal drawn seated crossed legs on a light background">
+<!-- Fixed background — decorative -->
+<div class="bg" aria-hidden="true">
+  <img src="LeadImages/background.jpg" alt="">
 </div>
 
 <!-- Charcoal cursor -->
@@ -23,6 +23,7 @@
 <button class="cursor-toggle" id="cursor-toggle" aria-label="Toggle charcoal cursor">cursor · on</button>
 
 <!-- OPENING -->
+<header>
 <div class="opening">
   <p class="opening-eyebrow">Portfolio</p>
   <h1>Mollie E. <em>Muñoz</em></h1>
@@ -32,6 +33,7 @@
   <p class="opening-role">AI Interaction Designer &nbsp;·&nbsp; Information Designer &nbsp;·&nbsp; Software Engineer</p>
   <p class="opening-epigraph">Designing the space between human and AI.</p>
 </div>
+</header>
 
 <!-- NAV -->
 <nav>
@@ -503,6 +505,7 @@
 </main>
 
 <!-- ══ DESIGNER'S STATEMENT — floats over dancer ══ -->
+<section aria-label="Artist Statement">
 <div class="statement-window">
   <div class="statement-inset">
 
@@ -540,6 +543,7 @@
 
   </div>
 </div><!-- end statement-window -->
+</section>
 
 <!-- FOOTER -->
 <footer class="footer-transparent">
@@ -564,7 +568,7 @@
 </footer>
 
 <!-- LIGHTBOX -->
-<div class="lightbox-overlay" id="lightbox">
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
   <span class="lightbox-close">esc · click to close</span>
   <img id="lightbox-img" src="" alt="">
 </div>
