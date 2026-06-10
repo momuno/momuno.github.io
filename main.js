@@ -501,4 +501,23 @@ if (window.matchMedia('(hover: none)').matches) {
   });
 })();
 
+  // ── CURSOR TOGGLE ──
+  (function() {
+    const btn = document.getElementById('cursor-toggle');
+    if (!btn) return;
+    const PREF_KEY = 'cursorOff';
+
+    // Apply saved preference on load
+    if (localStorage.getItem(PREF_KEY) === '1') {
+      document.body.classList.add('cursor-off');
+      btn.textContent = 'cursor · off';
+    }
+
+    btn.addEventListener('click', () => {
+      const isOff = document.body.classList.toggle('cursor-off');
+      btn.textContent = isOff ? 'cursor · off' : 'cursor · on';
+      localStorage.setItem(PREF_KEY, isOff ? '1' : '0');
+    });
+  })();
+
 }); // end DOMContentLoaded

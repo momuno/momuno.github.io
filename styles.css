@@ -53,6 +53,37 @@
     mix-blend-mode: difference;
   }
 
+  /* ── CURSOR TOGGLE ── */
+  .cursor-toggle {
+    position: fixed;
+    bottom: 1.4rem;
+    right: 1.6rem;
+    z-index: 2000;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--mid);
+    background: var(--faint);
+    border: 1px solid var(--smudge);
+    border-radius: 0;
+    padding: 0.55em 0.85em 0.45em;
+    line-height: 1;
+    cursor: auto !important;
+    transition: background 0.2s, color 0.2s;
+  }
+  .cursor-toggle:hover {
+    background: var(--smudge);
+    color: var(--ink);
+  }
+
+  /* When cursor is off — restore system cursor everywhere */
+  body.cursor-off { cursor: auto !important; }
+  body.cursor-off a { cursor: auto !important; }
+  body.cursor-off .gallery-lightbox { cursor: auto !important; }
+  body.cursor-off #charcoal-cursor,
+  body.cursor-off #crosshair-cursor { display: none; }
+
   /* ── BACKGROUND ── */
   .bg {
     position: fixed;
