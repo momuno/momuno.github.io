@@ -14,6 +14,9 @@
 <canvas id="charcoal-cursor" aria-hidden="true"></canvas>
 <canvas id="crosshair-cursor" aria-hidden="true"></canvas>
 
+<!-- Cursor toggle -->
+<button class="cursor-toggle" id="cursor-toggle" aria-label="Toggle charcoal cursor">cursor · on</button>
+
 <nav>
   <ul>
     <li><a href="index.html#early-work">← Portfolio</a></li>
@@ -110,7 +113,8 @@
   </div>
 
     <!-- VISUAL MERCHANDISING -->
-  <div class="gallery-section" id="merchandising" style="scroll-margin-top: 6rem;">
+  <a id="merchandising" style="display:block;position:relative;top:-2rem;visibility:hidden;" aria-hidden="true" tabindex="-1"></a>
+  <div class="gallery-section">
     <span class="gallery-label">Visual Merchandising</span>
 
     <!-- Juniors -->
@@ -178,7 +182,7 @@
 </footer>
 
 <!-- LIGHTBOX -->
-<div class="lightbox-overlay" id="lightbox">
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
   <span class="lightbox-close">esc · click to close</span>
   <img id="lightbox-img" src="" alt="">
 </div>
@@ -188,6 +192,14 @@
 <script src="main.js"></script>
 
 <script>
+// Re-scroll to hash after images load to correct for layout shift
+if (location.hash) {
+  window.addEventListener('load', () => {
+    const target = document.querySelector(location.hash);
+    if (target) target.scrollIntoView({ behavior: 'instant' });
+  });
+}
+
 // ── GALLERY PAGE INIT ──
 // Init all stamp marks
 document.querySelectorAll('.stamp-canvas').forEach(canvas => {
