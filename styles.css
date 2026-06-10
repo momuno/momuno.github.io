@@ -1607,7 +1607,7 @@
   font-size: 0.82rem;
   letter-spacing: 0.20em;
   text-transform: uppercase;
-  color: var(--dark-mid);
+  color: var(--ink);
   margin-bottom: 0.4rem;
 }
 
@@ -1619,7 +1619,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--mid);
+  color: var(--dark-mid);
   text-decoration: none;
   background: var(--faint);
   border: 1px solid var(--smudge);
